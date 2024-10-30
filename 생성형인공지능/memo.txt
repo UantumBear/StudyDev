@@ -1,0 +1,3 @@
+https://huggingface.co/docs/transformers/ko/perf_infer_gpu_one
+
+집가면 이거 따라해보기
