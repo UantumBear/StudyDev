@@ -6,7 +6,7 @@ from sklearn.preprocessing import StandardScaler
 
 # 예제 데이터셋 로드 (USArrests.csv 파일이 있는 경우)
 # 주 이름을 인덱스로 설정
-USArrests = pd.read_csv('USArrests.csv', index_col=0)
+USArrests = pd.read_csv('usarrests.csv', index_col=0)
 
 # 데이터 표준화
 scaler = StandardScaler()
