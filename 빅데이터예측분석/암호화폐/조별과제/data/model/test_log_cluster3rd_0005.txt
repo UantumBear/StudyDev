@@ -1,0 +1,5 @@
+Test Results:
+Test MSE: 0.0015
+Test MAE: 0.0364
+Test R©÷: -0.6340
+Test MAPE: 145.16%
