@@ -20,7 +20,7 @@ print(f"Using device: {device}")
 
 
 # Step 한글 폰트 경로 지정
-font_path = 'fonts/malgun.ttf'
+font_path = 'fonts/Paperlogy-4Regular.ttf'
 font_prop = fm.FontProperties(fname=font_path, size=8) # 폰트 프로퍼티 설정
 # matplotlib의 rcParams 설정을 통해 전역적으로 한글 폰트 적용
 plt.rcParams['font.family'] = font_prop.get_name()
@@ -297,7 +297,7 @@ def train_model(model, train_loader, val_loader, criterion, optimizer, scheduler
     plt.savefig(rf'data/model/02_step4_lstm_손실_cluster3nd_{hp.VER}.png', dpi=300, bbox_inches='tight')  # 파일로 저장
     plt.close()  # 플롯 닫기 (메모리 절약)
 
-train_model(model, train_loader, val_loader, criterion, optimizer, scheduler, epochs=hp.EPOCHS, patience=hp.PATIENCE)
+# train_model(model, train_loader, val_loader, criterion, optimizer, scheduler, epochs=hp.EPOCHS, patience=hp.PATIENCE)
 
 # 모델 불러오기
 model = LSTMModel(input_size, hidden_size, num_layers, output_size).to(device)
