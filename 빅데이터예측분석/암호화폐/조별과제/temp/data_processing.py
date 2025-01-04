@@ -9,7 +9,7 @@ from sklearn.cluster import KMeans
 import matplotlib.font_manager as fm
 
 # 한글 폰트 경로 지정
-font_path = 'data/fonts/malgun.ttf'
+font_path = '../../data/fonts/malgun.ttf'
 font_prop = fm.FontProperties(fname=font_path, size=8) # 폰트 프로퍼티 설정
 # matplotlib의 rcParams 설정을 통해 전역적으로 한글 폰트 적용
 plt.rcParams['font.family'] = font_prop.get_name()
