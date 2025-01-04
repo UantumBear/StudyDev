@@ -404,7 +404,64 @@ plt.show()
 
 
 
-def evaluate_model(model, test_loader):
+# def evaluate_model(model, test_loader):
+#     model.eval()
+#     test_preds, test_targets = [], []
+#
+#     with torch.no_grad():
+#         for X_batch, y_batch in test_loader:
+#             X_batch, y_batch = X_batch.to(device), y_batch.to(device)
+#             outputs = model(X_batch)
+#             test_preds.extend(outputs.squeeze().cpu().numpy())
+#             test_targets.extend(y_batch.cpu().numpy())
+#
+#     # 성능 지표 계산
+#     epsilon = 1e-10  # 0으로 나누는 문제를 방지하기 위한 작은 값
+#     test_mse = mean_squared_error(test_targets, test_preds)
+#     test_mae = mean_absolute_error(test_targets, test_preds)
+#     test_r2 = r2_score(test_targets, test_preds)
+#
+#     # 작은 값 처리: 실제값이 epsilon보다 작은 경우를 제외
+#     test_targets = np.array(test_targets)
+#     test_preds = np.array(test_preds)
+#     valid_indices = test_targets > epsilon  # 유효한 실제값만 선택
+#     test_mape = np.mean(
+#         np.abs((test_targets[valid_indices] - test_preds[valid_indices]) / test_targets[valid_indices])
+#     ) * 100 if np.sum(valid_indices) > 0 else float('nan')  # 유효한 값이 없으면 NaN
+#
+#     # 결과 출력
+#     print(f"Test MSE: {test_mse:.4f}")
+#     print(f"Test MAE: {test_mae:.4f}")
+#     print(f"Test R²: {test_r2:.4f}")
+#     print(f"Test MAPE: {test_mape:.2f}%")
+#
+#     # 결과를 파일에 저장
+#     with open(rf'data/model/test_log_cluster3rd_{hp.VER}.txt', 'w') as log_file:
+#         log_file.write("Test Results:\n")
+#         log_file.write(f"Test MSE: {test_mse:.4f}\n")
+#         log_file.write(f"Test MAE: {test_mae:.4f}\n")
+#         log_file.write(f"Test R²: {test_r2:.4f}\n")
+#         log_file.write(f"Test MAPE: {test_mape:.2f}%\n")
+#
+#     return test_mse, test_mae, test_r2, test_mape
+#
+#
+#
+#
+# model.eval()
+#
+# # 테스트 데이터 평가
+# test_mse, test_mae, test_r2, test_mape = evaluate_model(model, test_loader)
+#
+# # 최종 결과 출력
+# print(f"Final Test Results:")
+# print(f" - Test MSE: {test_mse:.4f}")
+# print(f" - Test MAE: {test_mae:.4f}")
+# print(f" - Test R²: {test_r2:.4f}")
+# print(f" - Test MAPE: {test_mape:.2f}%")
+
+
+def evaluate_model(model, test_loader, scaler, target_column, log_transformed=True):
     model.eval()
     test_preds, test_targets = [], []
 
@@ -415,47 +472,72 @@ def evaluate_model(model, test_loader):
             test_preds.extend(outputs.squeeze().cpu().numpy())
             test_targets.extend(y_batch.cpu().numpy())
 
-    # 성능 지표 계산
-    epsilon = 1e-10  # 0으로 나누는 문제를 방지하기 위한 작은 값
-    test_mse = mean_squared_error(test_targets, test_preds)
-    test_mae = mean_absolute_error(test_targets, test_preds)
-    test_r2 = r2_score(test_targets, test_preds)
+    # 2. 정규화 상태에서 MSE, RMSE 계산
+    test_mse_normalized = mean_squared_error(test_targets, test_preds)
+    test_rmse_normalized = np.sqrt(test_mse_normalized)
+    test_mae_normalized = mean_absolute_error(test_targets, test_preds)
 
-    # 작은 값 처리: 실제값이 epsilon보다 작은 경우를 제외
-    test_targets = np.array(test_targets)
-    test_preds = np.array(test_preds)
-    valid_indices = test_targets > epsilon  # 유효한 실제값만 선택
-    test_mape = np.mean(
-        np.abs((test_targets[valid_indices] - test_preds[valid_indices]) / test_targets[valid_indices])
-    ) * 100 if np.sum(valid_indices) > 0 else float('nan')  # 유효한 값이 없으면 NaN
+    # 3. 역정규화 및 역로그변환
+    test_preds_inverse = inverse_transform(np.array(test_preds), scaler, log_transformed)
+    test_targets_inverse = inverse_transform(np.array(test_targets), scaler, log_transformed)
 
-    # 결과 출력
-    print(f"Test MSE: {test_mse:.4f}")
-    print(f"Test MAE: {test_mae:.4f}")
-    print(f"Test R²: {test_r2:.4f}")
-    print(f"Test MAPE: {test_mape:.2f}%")
+    # 4. 원본 스케일에서 MSE, RMSE 계산
+    test_mse_original = mean_squared_error(test_targets_inverse, test_preds_inverse)
+    test_rmse_original = np.sqrt(test_mse_original)
+    test_mae_original = mean_absolute_error(test_targets_inverse, test_preds_inverse)
+    test_r2_original = r2_score(test_targets_inverse, test_preds_inverse)
+    test_mape_original = np.mean(np.abs((test_targets_inverse - test_preds_inverse) / test_targets_inverse)) * 100
 
-    # 결과를 파일에 저장
-    with open(rf'data/model/test_log_cluster3rd_{hp.VER}.txt', 'w') as log_file:
-        log_file.write("Test Results:\n")
-        log_file.write(f"Test MSE: {test_mse:.4f}\n")
-        log_file.write(f"Test MAE: {test_mae:.4f}\n")
-        log_file.write(f"Test R²: {test_r2:.4f}\n")
-        log_file.write(f"Test MAPE: {test_mape:.2f}%\n")
+    # 5. 결과 출력
+    print("Test Results (Normalized):")
+    print(f" - MSE: {test_mse_normalized:.4f}")
+    print(f" - RMSE: {test_rmse_normalized:.4f}")
+    print(f" - MAE: {test_mae_normalized:.4f}")
+    print("\nTest Results (Original Scale):")
+    print(f" - MSE: {test_mse_original:.4f}")
+    print(f" - RMSE: {test_rmse_original:.4f}")
+    print(f" - MAE: {test_mae_original:.4f}")
+    print(f" - R²: {test_r2_original:.4f}")
+    print(f" - MAPE: {test_mape_original:.2f}%")
 
-    return test_mse, test_mae, test_r2, test_mape
+    # 6. 결과 저장
+    with open(rf'data/model/test_metrics_{hp.VER}.txt', 'w') as log_file:
+        log_file.write("Test Results (Normalized):\n")
+        log_file.write(f"MSE: {test_mse_normalized:.4f}\n")
+        log_file.write(f"RMSE: {test_rmse_normalized:.4f}\n")
+        log_file.write(f"MAE: {test_mae_normalized:.4f}\n")
+        log_file.write("\nTest Results (Original Scale):\n")
+        log_file.write(f"MSE: {test_mse_original:.4f}\n")
+        log_file.write(f"RMSE: {test_rmse_original:.4f}\n")
+        log_file.write(f"MAE: {test_mae_original:.4f}\n")
+        log_file.write(f"R²: {test_r2_original:.4f}\n")
+        log_file.write(f"MAPE: {test_mape_original:.2f}%\n")
 
-
-
-
+    return {
+        "Normalized": {"MSE": test_mse_normalized, "RMSE": test_rmse_normalized, "MAE": test_mae_normalized},
+        "Original": {
+            "MSE": test_mse_original,
+            "RMSE": test_rmse_original,
+            "MAE": test_mae_original,
+            "R2": test_r2_original,
+            "MAPE": test_mape_original,
+        },
+    }
 model.eval()
 
 # 테스트 데이터 평가
-test_mse, test_mae, test_r2, test_mape = evaluate_model(model, test_loader)
+# 테스트 데이터 평가
+results = evaluate_model(model, test_loader, scalers[target_column], target_column)
 
 # 최종 결과 출력
-print(f"Final Test Results:")
-print(f" - Test MSE: {test_mse:.4f}")
-print(f" - Test MAE: {test_mae:.4f}")
-print(f" - Test R²: {test_r2:.4f}")
-print(f" - Test MAPE: {test_mape:.2f}%")
+print("\nComparison of Test Results:")
+print("Normalized Results:")
+print(f" - MSE: {results['Normalized']['MSE']:.4f}")
+print(f" - RMSE: {results['Normalized']['RMSE']:.4f}")
+print(f" - MAE: {results['Normalized']['MAE']:.4f}")
+print("Original Scale Results:")
+print(f" - MSE: {results['Original']['MSE']:.4f}")
+print(f" - RMSE: {results['Original']['RMSE']:.4f}")
+print(f" - MAE: {results['Original']['MAE']:.4f}")
+print(f" - R²: {results['Original']['R2']:.4f}")
+print(f" - MAPE: {results['Original']['MAPE']:.2f}%")

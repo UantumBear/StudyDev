@@ -47,17 +47,17 @@
 # PATIENCE=15 # 10회 반복 마다 학습률을 감소시킴
 # LOOK_BACK = 80
 
-# clust3rd 고정 - 최종
-VER = "0004"
-HIDDEN_SIZE = 150
-NUM_LAYERS = 2
-OUTPUT_SIZE = 1
-BATCH_SIZE = 64
-EPOCHS = 100
-LEARNING_RATE = 0.0002
-DROP_OUT=0.2
-PATIENCE=10 # 10회 반복 마다 학습률을 감소시킴
-LOOK_BACK = 40
+# cluster 2n 최종
+# VER = "241214DASH"
+# HIDDEN_SIZE = 256
+# NUM_LAYERS = 1
+# OUTPUT_SIZE = 1
+# BATCH_SIZE = 64
+# EPOCHS = 100
+# LEARNING_RATE = 0.0002
+# DROP_OUT=0.2
+# PATIENCE=10 # 10회 반복 마다 학습률을 감소시킴
+# LOOK_BACK = 40
 
 # cluster 2n 최종
 # VER = "0005"
@@ -70,3 +70,15 @@ LOOK_BACK = 40
 # DROP_OUT=0.2
 # PATIENCE=15 # 10회 반복 마다 학습률을 감소시킴
 # LOOK_BACK = 100
+
+# clust3rd 고정 - 최종
+# VER = "241214"
+# HIDDEN_SIZE = 150
+# NUM_LAYERS = 2
+# OUTPUT_SIZE = 1
+# BATCH_SIZE = 64
+# EPOCHS = 100
+# LEARNING_RATE = 0.0002
+# DROP_OUT=0.2
+# PATIENCE=10 # 10회 반복 마다 학습률을 감소시킴
+# LOOK_BACK = 40

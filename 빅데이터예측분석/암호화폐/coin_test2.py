@@ -4,8 +4,8 @@ import pandas as pd
 
 # API 설정
 api_key = 'JU59ECUA5VUPYE5AFVJG5C3EIIX7K2USPW'
-address = '0xa7efae728d2936e78bda97dc267687568dd593f3'  # 예: 유명 주소 "0x742d35Cc6634C0532925a3b844Bc454e4438f44e"
-url = f"https://api.etherscan.io/api?module=account&action=txlist&address={address}&startblock=0&endblock=99999999&sort=asc&apikey={api_key}"
+address = '0x00000000219ab540356cBB839Cbe05303d7705Fa'  # 예: 유명 주소 "0x742d35Cc6634C0532925a3b844Bc454e4438f44e"
+url = f"https://api.etherscan.io/api?module=account&action=txlist&address={address}&startblock=0&endblock=99999999&sort=desc&apikey={api_key}"
 
 # API 요청
 response = requests.get(url)
@@ -13,32 +13,29 @@ data = response.json()
 # print(data)  # API 응답 전체 확인
 
 
-# 데이터 확인 및 처리
+
+
 if data['status'] == '1':
-    transactions = data['result']
+    # 데이터를 DataFrame으로 변환
+    df = pd.DataFrame(data['result'])
 
-    # 트랜잭션 데이터가 없는 경우
-    if len(transactions) == 0:
-        print("트랜잭션 데이터가 없습니다.")
-    else:
-        # DataFrame으로 변환
-        df = pd.DataFrame(transactions)
+    # 타임스탬프를 날짜로 변환
+    df['timeStamp'] = pd.to_datetime(df['timeStamp'].astype(int), unit='s')
 
-        # DataFrame의 첫 몇 줄과 열 이름 확인 (디버깅용)
-        print(df.head())
-        print(df.columns)
+    # ETH 값 변환 (Wei -> ETH)
+    df['value'] = df['value'].astype(float) / (10 ** 18)
 
-        # 타임스탬프를 날짜로 변환
-        df['timeStamp'] = pd.to_numeric(df['timeStamp'])
-        df['timeStamp'] = pd.to_datetime(df['timeStamp'], unit='s')
+    # ETH 거래만 필터링 (value > 0)
+    eth_transactions = df[df['value'] > 0].copy()
 
-        # 전체 데이터의 시간 범위 확인
-        print("최소 타임스탬프:", df['timeStamp'].min())
-        print("최대 타임스탬프:", df['timeStamp'].max())
+    # 주요 열 선택
+    # eth_transactions = eth_transactions[['timeStamp', 'from', 'to', 'value', 'gas', 'gasPrice']]
 
-        # 필터링 없이 모든 데이터 저장
-        df.to_csv("ethereum_all_transactions.csv", index=False, encoding="utf-8-sig")
-        print("전체 트랜잭션 데이터가 'ethereum_all_transactions.csv'로 저장되었습니다.")
+    # 결과 확인
+    print(eth_transactions.head())
 
+    # CSV로 저장
+    eth_transactions.to_csv("eth_0x00000000219ab540356cBB839Cbe05303d7705Fa_DESC.csv", index=False, encoding="utf-8-sig")
+    print("ETH 거래 데이터가 csv'로 저장되었습니다.")
 else:
     print(f"API 호출 실패: {data['message']}")

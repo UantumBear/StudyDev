@@ -79,7 +79,8 @@ plt.title("Log Transformed Distribution")
 
 # 로그 변환 후 정규화된 target 컬럼 출력
 print("로그 변환 후 정규화된 target 컬럼 출력: \n", df[target_column])
-
+# df[[target_column]].to_csv("data/output/로그변환후정규화한BSV.csv", index=False)
+df[[target_column]].to_excel("data/output/로그변환후정규화한BSV.xlsx", index=False)
 # data = df.drop(columns=['Date']).copy()  # 정규화 대상 데이터
 
 
@@ -243,28 +244,47 @@ def train_model(model, train_loader, val_loader, criterion, optimizer, scheduler
         val_losses.append(val_loss / len(val_loader))
 
         # MSE, MAE 계산
-        train_mse = mean_squared_error(train_targets, train_preds)
-        train_mae = mean_absolute_error(train_targets, train_preds)
-        val_mse = mean_squared_error(val_targets, val_preds)
-        val_mae = mean_absolute_error(val_targets, val_preds)
+        # train_mse = mean_squared_error(train_targets, train_preds)
+        # train_mae = mean_absolute_error(train_targets, train_preds)
+        # val_mse = mean_squared_error(val_targets, val_preds)
+        # val_mae = mean_absolute_error(val_targets, val_preds)
+
+        # RMSE 계산 (정규화된 값으로 계산)
+        # train_rmse = np.sqrt(mean_squared_error(train_targets, train_preds))
+        # val_rmse = np.sqrt(mean_squared_error(val_targets, val_preds))
+
+        # 로그변환 및 정규화 원복
+        # train_targets_inverse = inverse_transform(np.array(train_targets), scalers[target_column])
+        # train_preds_inverse = inverse_transform(np.array(train_preds), scalers[target_column])
+        # val_targets_inverse = inverse_transform(np.array(val_targets), scalers[target_column])
+        # val_preds_inverse = inverse_transform(np.array(val_preds), scalers[target_column])
+        # 원복된 스케일 값으로 MSE, RMSE 계산
+        # train_mse_inverse = mean_squared_error(train_targets_inverse, train_preds_inverse)
+        # val_mse_inverse = mean_squared_error(val_targets_inverse, val_preds_inverse)
+        # train_rmse_inverse = np.sqrt(mean_squared_error(train_targets_inverse, train_preds_inverse))
+        # val_rmse_inverse = np.sqrt(mean_squared_error(val_targets_inverse, val_preds_inverse))
+
         # R², MAPE 추가 계산
-        val_r2 = r2_score(val_targets, val_preds)
-        val_mape = np.mean(np.abs((np.array(val_targets) - np.array(val_preds)) / np.array(val_targets))) * 100
+        # val_r2 = r2_score(val_targets, val_preds)
+        # val_mape = np.mean(np.abs((np.array(val_targets) - np.array(val_preds)) / np.array(val_targets))) * 100
 
         # Epoch 로그 출력
         epoch_log = (
             f"Epoch {epoch + 1}/{epochs} | "
             f"Train Loss: {train_losses[-1]:.4f}, Val Loss: {val_losses[-1]:.4f} | "
-            f"Train MSE: {train_mse:.4f}, Train MAE: {train_mae:.4f} | "
-            f"Val MSE: {val_mse:.4f}, Val MAE: {val_mae:.4f} | "
-            f"Val R²: {val_r2:.4f}, Val MAPE: {val_mape:.2f}%"
+            # f"Train MSE(로그변환,정규화스케일): {train_mse:.4f}, Train MAE: {train_mae:.4f} | "
+            # f"Train RMSE(로그변환,정규화스케일): {train_rmse:.4f}, Train MAE: {val_rmse:.4f} | "
+            # f"Train MSE(원본스케일): {train_mse_inverse:.4f}, Train MAE: {val_mse_inverse:.4f} | "
+            # f"Train RMSE(원본스케일): {train_rmse_inverse:.4f}, Train MAE: {val_rmse_inverse:.4f} | "
+            # f"Val MSE: {val_mse:.4f}, Val MAE: {val_mae:.4f} | "
+            # f"Val R²: {val_r2:.4f}, Val MAPE: {val_mape:.2f}%"
         )
         print(epoch_log)
 
         # 로그 파일 저장
         with open(log_file_path, "a") as log_file:
             log_file.write(
-                f"{epoch + 1},{train_losses[-1]:.4f},{val_losses[-1]:.4f},{train_mse:.4f},{train_mae:.4f},{val_mse:.4f},{val_mae:.4f},{val_r2:.4f},{val_mape:.2f}\n"
+                f"{epoch + 1},{train_losses[-1]:.4f},{val_losses[-1]:.4f}\n"
             )
 
         # print(
@@ -369,7 +389,7 @@ plt.show()
 
 
 
-def evaluate_model(model, test_loader):
+def evaluate_model(model, test_loader, scaler, target_column, log_transformed=True):
     model.eval()
     test_preds, test_targets = [], []
 
@@ -380,36 +400,72 @@ def evaluate_model(model, test_loader):
             test_preds.extend(outputs.squeeze().cpu().numpy())
             test_targets.extend(y_batch.cpu().numpy())
 
-    # 성능 지표 계산
-    test_mse = mean_squared_error(test_targets, test_preds)
-    test_mae = mean_absolute_error(test_targets, test_preds)
-    test_r2 = r2_score(test_targets, test_preds)
-    test_mape = np.mean(np.abs((np.array(test_targets) - np.array(test_preds)) / np.array(test_targets))) * 100
+    # 2. 정규화 상태에서 MSE, RMSE 계산
+    test_mse_normalized = mean_squared_error(test_targets, test_preds)
+    test_rmse_normalized = np.sqrt(test_mse_normalized)
+    test_mae_normalized = mean_absolute_error(test_targets, test_preds)
 
-    print(f"Test MSE: {test_mse:.4f}")
-    print(f"Test MAE: {test_mae:.4f}")
-    print(f"Test R²: {test_r2:.4f}")
-    print(f"Test MAPE: {test_mape:.2f}%")
+    # 3. 역정규화 및 역로그변환
+    test_preds_inverse = inverse_transform(np.array(test_preds), scaler, log_transformed)
+    test_targets_inverse = inverse_transform(np.array(test_targets), scaler, log_transformed)
 
-    # 결과를 파일에 저장
-    with open(rf'data/model/test_log_cluster3rd_{hp.VER}.txt', 'w') as log_file:
-        log_file.write("Test Results:\n")
-        log_file.write(f"Test MSE: {test_mse:.4f}\n")
-        log_file.write(f"Test MAE: {test_mae:.4f}\n")
-        log_file.write(f"Test R²: {test_r2:.4f}\n")
-        log_file.write(f"Test MAPE: {test_mape:.2f}%\n")
+    # 4. 원본 스케일에서 MSE, RMSE 계산
+    test_mse_original = mean_squared_error(test_targets_inverse, test_preds_inverse)
+    test_rmse_original = np.sqrt(test_mse_original)
+    test_mae_original = mean_absolute_error(test_targets_inverse, test_preds_inverse)
+    test_r2_original = r2_score(test_targets_inverse, test_preds_inverse)
+    test_mape_original = np.mean(np.abs((test_targets_inverse - test_preds_inverse) / test_targets_inverse)) * 100
 
-    return test_mse, test_mae, test_r2, test_mape
+    # 5. 결과 출력
+    print("Test Results (Normalized):")
+    print(f" - MSE: {test_mse_normalized:.4f}")
+    print(f" - RMSE: {test_rmse_normalized:.4f}")
+    print(f" - MAE: {test_mae_normalized:.4f}")
+    print("\nTest Results (Original Scale):")
+    print(f" - MSE: {test_mse_original:.4f}")
+    print(f" - RMSE: {test_rmse_original:.4f}")
+    print(f" - MAE: {test_mae_original:.4f}")
+    print(f" - R²: {test_r2_original:.4f}")
+    print(f" - MAPE: {test_mape_original:.2f}%")
 
+    # 6. 결과 저장
+    with open(rf'data/model/test_metrics_{hp.VER}.txt', 'w') as log_file:
+        log_file.write("Test Results (Normalized):\n")
+        log_file.write(f"MSE: {test_mse_normalized:.4f}\n")
+        log_file.write(f"RMSE: {test_rmse_normalized:.4f}\n")
+        log_file.write(f"MAE: {test_mae_normalized:.4f}\n")
+        log_file.write("\nTest Results (Original Scale):\n")
+        log_file.write(f"MSE: {test_mse_original:.4f}\n")
+        log_file.write(f"RMSE: {test_rmse_original:.4f}\n")
+        log_file.write(f"MAE: {test_mae_original:.4f}\n")
+        log_file.write(f"R²: {test_r2_original:.4f}\n")
+        log_file.write(f"MAPE: {test_mape_original:.2f}%\n")
 
+    return {
+        "Normalized": {"MSE": test_mse_normalized, "RMSE": test_rmse_normalized, "MAE": test_mae_normalized},
+        "Original": {
+            "MSE": test_mse_original,
+            "RMSE": test_rmse_original,
+            "MAE": test_mae_original,
+            "R2": test_r2_original,
+            "MAPE": test_mape_original,
+        },
+    }
 model.eval()
 
 # 테스트 데이터 평가
-test_mse, test_mae, test_r2, test_mape = evaluate_model(model, test_loader)
+# 테스트 데이터 평가
+results = evaluate_model(model, test_loader, scalers[target_column], target_column)
 
 # 최종 결과 출력
-print(f"Final Test Results:")
-print(f" - Test MSE: {test_mse:.4f}")
-print(f" - Test MAE: {test_mae:.4f}")
-print(f" - Test R²: {test_r2:.4f}")
-print(f" - Test MAPE: {test_mape:.2f}%")
+print("\nComparison of Test Results:")
+print("Normalized Results:")
+print(f" - MSE: {results['Normalized']['MSE']:.4f}")
+print(f" - RMSE: {results['Normalized']['RMSE']:.4f}")
+print(f" - MAE: {results['Normalized']['MAE']:.4f}")
+print("Original Scale Results:")
+print(f" - MSE: {results['Original']['MSE']:.4f}")
+print(f" - RMSE: {results['Original']['RMSE']:.4f}")
+print(f" - MAE: {results['Original']['MAE']:.4f}")
+print(f" - R²: {results['Original']['R2']:.4f}")
+print(f" - MAPE: {results['Original']['MAPE']:.2f}%")
