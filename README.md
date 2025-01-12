@@ -1,7 +1,5 @@
 ## Study_01
-공부 기록용 Repository
-
-
+공부용 Repository
 
 ### Git
 
@@ -9,6 +7,8 @@
 ```
 [Pycharm > VCS > Get from Version Control]
 https://github.com/UantumBear/Study_01.git
+# Repository name 변경 함
+# https://github.com/UantumBear/StudyDev.git
 ```
 
 

@@ -64,9 +64,36 @@ https://ai.azure.com/
 
 ![azureAIFoundry5.png](./datas/azureAIFoundry5.png)
 위와 같이 할당량 부족 문제가 떴다.
-Azure에는 리전별 서비스 제공 정책이 있다고 하는데, korean central 에는 해당 할당량이 없는 듯 하다.
-다른 지역으로 변경하자.
-챗 gpt는 East US 를 추천하므로 해당 리전으로 변경하겠다.
-맙소사. 리소스 그룹의 리전과 모델 리전은 달라고 되지만 비용 절감을 위해서는 리전을 맞추는걸 추천한다고 한다.
 
-새로운 리소스 그룹을 만들고 리전을 변경하겠다.
+챗 gpt 에 따르면,
+Azure에는 리전별 서비스 제공 정책이 있고, korean central 에는 해당 할당량이 없는 듯 하므로  
+East US 지역으로 변경하고 추천했다. 
+또한 리소스 그룹의 리전과 모델 리전은 달라고 되지만 비용 절감을 위해서는 리전을 맞추는걸 추천한다고 한다.
+
+---
+
+여기서 잠시, 모델을 배포하기 위한 할당량을 신청하기 전에, 모델을 먼저 알아보자.
+##### 배포 유형 알기
+일단 배포 유형이라는게 존재한다.  
+글로벌 배치, 글로벌 표준, 글로벌 프로비저닝, 기준, 제공됨  
+출처: https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/deployment-types)
+일단 프로비저닝과 제공됨 은 월별 혹은 연간 플랜으로 제외하고,  
+테스트용으로는 **토큰 수 당 요금을 청구**하는 글로벌 배치, 글로벌 표준, 기준 이 있는데  
+**글로벌 표준(Global Standard)** 혹은 **기준(Standard)**을 선택하면 될 듯 하다.
+
+##### 지역별 가용성 알기
+그리고 모델 별로 사용할 수 있는 지역이 정해져 있다.  
+korea central 을 보면 몇개의 gpt-4o 를 제외하고는 거의 모든 모델의 가용성이 없다.  
+따라서 east US 를 사용해야 할 듯 하다.  
+출처: https://learn.microsoft.com/en-us/azure/ai-services/openai/quotas-limits#usage-tiers)
+![azureAIModelInfo1.png](./datas/azureAIModelInfo1.png)
+
+마지막으로 할당량 신청서를 작성하는데, easus 글로벌 표준은 모델 배포를 한국에서 할 수 없었다.  
+최종적으로 'Standard' 를 선택했고,
+azure ai servicer - openai 의 구독ID 와  
+gpt-35-turbo (할당량100) 으로 신청을 하였는데.. 일단 승인을 기다려봐야 한다.
+
+찾아보다 보니 애초에 기업용을 위해 만든 서비스 같아서 사용 가능할 지 모르겠다..
+2영업일이 소요된다고 하니 기다려보겠다.
+
+
