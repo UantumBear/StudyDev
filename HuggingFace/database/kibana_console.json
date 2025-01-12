@@ -1,0 +1,35 @@
+PUT /pdf_index
+{
+  "mappings": {
+    "properties": {
+      "filename": { "type": "text" },
+      "content": { "type": "text" },
+      "fileorder": { "type": "integer" },
+      "maincate": { "type": "text" },
+      "subcate": { "type": "text" },
+      "regi_date": { "type": "date" },
+      "modi_date": { "type": "date" },
+      "del_yn": { "type": "keyword" }
+    }
+  }
+}
+
+PUT /test_index
+{
+ "mappings": {
+  "properties": {
+   "filename": { "type": "text" },
+   "content": { "type": "text" },
+   "fileorder": { "type": "integer" },
+   "maincate": { "type": "text" },
+   "subcate": { "type": "text" },
+   "regi_date": { "type": "date" },
+   "modi_date": { "type": "date" },
+   "del_yn": { "type": "keyword" },
+   "embedding": {
+    "type": "dense_vector",
+    "dims": 512
+   }
+  }
+ }
+}

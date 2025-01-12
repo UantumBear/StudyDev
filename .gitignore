@@ -1,16 +1,21 @@
 #
 .env
+# Azure
+Azure/가이드/nonadd.md
 #
 빅데이터예측분석/암호화폐/venv3124
 빅데이터예측분석/암호화폐/venv3124/*
+빅데이터예측분석/조별과제
+빅데이터예측분석/조별과제/*
+빅데이터예측분석/암호화폐/조별과제/과정.md
+빅데이터예측분석/암호화폐/조별과제/fonts/*
 # work
 venvStudyDev
 venvStudyDev/*
 nonadd
 nonadd/*
-빅데이터예측분석/조별과제
-빅데이터예측분석/조별과제/*
 workBackup
 workBackup/*
-빅데이터예측분석/암호화폐/조별과제/과정.md
-빅데이터예측분석/암호화폐/조별과제/fonts/*
+# HuggingFace
+HuggingFace/database/info.md
+
