@@ -1,20 +1,23 @@
 ## GPT 식 숫자 정렬 (Python Version 정렬 1.11 > 1.2)
-
 import sys
+
 
 class Version:
     def __init__(self, number_str):
         self.number_str = number_str
-        self.int_str = 0
-        self.float_str = 0
-        self.order = 0
+        self.int_int = 0
+        self.float_int = 0
+        self.float_str = ""  # 원본 문자열, .1 과 .001 을 비교하기 위함
+        self.has_demical = '.' in number_str
 
-        if '.' in number_str:
+        if self.has_demical:
             temp = number_str.split('.')
-            self.int_str = int(temp[0])
-            self.float_str = int(temp[1])
+            self.int_int = int(temp[0])
+            self.float_int = int(temp[1])
+            self.float_str = temp[1]
         else:
-            self.int_str = int(number_str)
+            self.int_int = int(number_str)
+
 
 # 입력 받기
 n = input()
@@ -29,8 +32,8 @@ versions = []
 for number_str in inputs:
     versions.append(Version(number_str))
 
-# 정렬
-versions.sort(key=lambda v: (v.int_str, v.float_str))
+# 정렬 : 정수부터 비교 -> 정수가 같은 경우 demical 이 없으면 더 앞으로, 소숫점 숫자가 같으면 길이가 길면 앞으로
+versions.sort(key=lambda v: (v.int_int, v.has_demical, v.float_int, len(v.float_str)))
 
 # 정렬 결과 출력
 for version in versions:
