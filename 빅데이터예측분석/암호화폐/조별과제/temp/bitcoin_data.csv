@@ -1,0 +1,2 @@
+id,symbol,name,current_price_usd,market_cap_usd,total_volume_usd,hashing_algorithm,block_time_in_minutes,community_score,developer_score,public_interest_score
+bitcoin,btc,Bitcoin,94498,1871964801760,88354121531,SHA-256,10,,,

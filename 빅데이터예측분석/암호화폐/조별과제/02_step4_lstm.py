@@ -77,7 +77,6 @@ plt.title("Log Transformed Distribution")
 
 # 로그 변환 후 정규화된 target 컬럼 출력
 print("로그 변환 후 정규화된 target 컬럼 출력: \n", df[target_column])
-
 # data = df.drop(columns=['Date']).copy()  # 정규화 대상 데이터
 
 

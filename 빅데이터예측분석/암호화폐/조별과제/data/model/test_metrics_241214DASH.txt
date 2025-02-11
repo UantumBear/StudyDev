@@ -1,0 +1,11 @@
+Test Results (Normalized):
+MSE: 0.0002
+RMSE: 0.0152
+MAE: 0.0105
+
+Test Results (Original Scale):
+MSE: 1.6824
+RMSE: 1.2971
+MAE: 0.8449
+R©÷: 0.7329
+MAPE: 3.24%
