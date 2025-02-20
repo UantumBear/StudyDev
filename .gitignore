@@ -1,5 +1,6 @@
 #
 .env
+*/__pycache__
 # Azure
 Azure/가이드/nonadd.md
 #
