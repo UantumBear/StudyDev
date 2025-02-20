@@ -16,6 +16,21 @@ nonadd
 nonadd/*
 workBackup
 workBackup/*
+# FastAPI
+FastAPI/Dockerfile
 # HuggingFace
 HuggingFace/database/info.md
+# Softeer
+Softeer
+Softeer/*
+# CodingTest
+CodingTest/data
+CodingTest/data/*
+CodingTest/demand_forcasting.py
+CodingTest/bfs.py
+CodingTest/bfs2.py
+# venv
+venv312
+venv312/*
+
 
