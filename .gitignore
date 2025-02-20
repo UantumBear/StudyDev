@@ -19,6 +19,7 @@ workBackup
 workBackup/*
 # FastAPI
 FastAPI/Dockerfile
+FastAPI/Dockerfile.txt
 # HuggingFace
 HuggingFace/database/info.md
 # Softeer
