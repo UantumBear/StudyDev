@@ -97,3 +97,34 @@ gpt-35-turbo (할당량100) 으로 신청을 하였는데.. 일단 승인을 기
 2영업일이 소요된다고 하니 기다려보겠다.
 
 
+##### Azure Open AI 모델 배포하기
+한 일주일이 지난 후 할당량을 허가받았다!
+![azureAIFoundry모델배포하기1.png](datas/azureAIFoundry모델배포하기1.png)
+
+할당량을 허가 받자 아래와 같이 배포가 가능해졌다.
+
+하지만 배포 퍼튼을 클릭하자,
+아래와 같은 메시지를 받았다.
+```text
+
+gpt-35-turbo 모델을 배포하지 못했습니다.
+ValidationError: The workspace MSI does not have deployments/write permissions to the underlying resource with id /subscriptions/c02ba630-04de-41c0-9255-7a3811fa9711/resourceGroups/student-resource-group-eastus/providers/Microsoft.CognitiveServices/accounts/uantumbear-aiservice-openai-eastus. Please ensure you have the proper permissions and try again.
+추적 ID : b52c9d1c-50ad-44c7-b9f2-5e115fe09c36
+클라이언트 요청 ID : e0f89fe8-a677-47e7-bc81-e6f44e15618e
+서비스 요청 ID : 15d50383-5755-4ac8-b550-5b43727eeea9
+```
+
+이는 MSI(Managed Service Identity)가 배포(write) 권한이 없다는 의미라고 한다..
+해결방법:
+(1) Azure Cognitive Services
+uantumbear-aiservice-openai-eastus 리소스 의 액세스제어 (IAM) 화면에서,
+"역할 할당 추가" (이 리소스에 액세스 권한 부여) 클릭
+Cognitive Services OpenAI Contributor 를 클릭 후 '다음' 버튼 클릭
+![azureAIFoundry모델배포하기2.png](datas/azureAIFoundry모델배포하기2.png)
+그리고 내 계정을 선택 후.. 검토+할당을 클릭하고 진행했다..
+![azureAIFoundry모델배포하기3.png](datas/azureAIFoundry모델배포하기3.png)
+
+그리고 다시 Azure AI Foundry 로 돌아가서 다시
+모델 배포를 클릭하자 모델 배포가 진행되었다!!
+
+![azureAIFoundry모델배포하기4.png](datas/azureAIFoundry모델배포하기4.png)
