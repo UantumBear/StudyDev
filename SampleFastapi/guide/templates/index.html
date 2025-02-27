@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>세계시간 및 한국시간</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            text-align: center;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .clock {
+            font-size: 2rem;
+            font-weight: bold;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+    </style>
+    <script>
+        function updateClocks() {
+            // First: 세계 표준 시간(UTC)
+            fetch('/first-backend-api/v1/fetch/getsysdate')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("utc_time").innerText = "UTC: " + data.current_datetime;
+                });
+
+            // Second: 한국 시간(KST, UTC+9)
+            fetch('/second-backend-api/v1/fetch/getsysdate')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("kst_time").innerText = "KST: " + data.current_datetime;
+                });
+        }
+        setInterval(updateClocks, 1000);
+        window.onload = updateClocks;
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h3>안녕하세요. (●'◡'●)<br>서버 구동 확인 용 테스트 페이지 입니다.</h3>
+        <h4>FisrtBackendApi 일반 하위 Router</h4>
+        <div id="utc_time" class="clock">로딩 중...</div>
+        <h4>SecondBackendApi 클래스 내부 Router</h4>
+        <div id="kst_time" class="clock">로딩 중...</div>
+    </div>
+</body>
+</html>
