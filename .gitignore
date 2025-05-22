@@ -1,8 +1,11 @@
 #
+openweb
+openweb/*
 .env
 */__pycache__
 # Azure
 Azure/가이드/nonadd.md
+Azure/.env_azure
 #
 빅데이터예측분석/암호화폐/venv3124
 빅데이터예측분석/암호화폐/venv3124/*
@@ -34,5 +37,10 @@ CodingTest/bfs2.py
 # venv
 venv312
 venv312/*
+# FY2025LLM 자료는 노출하지 말 것. 소스는 업로드
+FY2025LLM/data
+FY2025LLM/data/*
+FY2025LLM/venv
+FY2025LLM/venv/*
 
 
