@@ -1,5 +1,7 @@
 C:\Users\litl\AppData\Local\Programs\Python\Python313\python.exe -m venv venv
 python version: 3.13
+pip freeze > FY2025LLM/requirements.txt
+
 
 0. 모델 다운로드를 위한 llama 페이지에서의 url 발급
 https://www.llama.com/llama-downloads/ 
@@ -149,4 +151,8 @@ Downloading checklist.chk       ... 156 bytes
 Downloading tokenizer.model     ... 2.2 MB
 Downloading params.jsom         ... 220 bytes
 Downloading consolidated.00.pth ... 6.4GB
+Successfully downloaded model to C:\Users\litl\.llama\checkpoints\Llama3.2-3B
+View MD5 checksum files at: C:\Users\litl\.llama\checkpoints\Llama3.2-3B\checklist.chk
+[Optionally] To run MD5 checksums, use the following command: llama model verify-download --model-id Llama3.2-3B
+
 ```
