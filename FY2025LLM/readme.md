@@ -2,8 +2,9 @@
 ## Study
 
 #### Settings 
-C:\Users\litl\AppData\Local\Programs\Python\Python313\python.exe -m venv venv
-python version: 3.13
+C:\Users\litl\AppData\Local\Programs\Python\Python312\python.exe -m venv venv312`
+python version: 3.12 
+현재 3.13 은 CUDA 지원이 안되므로 3.12로 가상환경을 생성한다. (25.05.25)
 pip freeze > FY2025LLM/requirements.txt
 
 
@@ -205,3 +206,50 @@ convert_llama_weights_to_hf.py: error: argument --model_size: invalid choice: '3
 
 ※  "messages" 필드는 반드시 system → user → assistant 순으로 포함되어야 하며,
 LLaMA 3 모델은 이러한 multi-turn chat 형식의 데이터를 학습하는 데 최적화되어 있다고 한다.
+
+그리고 해당 데이터를 llama3 구조에 맞게 변환시켜 준다.
+
+
+#### 8. 파인튜닝 하기.
+쿠다 사용 가능 여부 확인
+```shell
+nvidia-smi
+# CUDA Version: 12.6 
+python -c "import torch; print(torch.cuda.get_device_name(0))"
+# False
+```
+라이브러리 설치
+```shell
+pip uninstall torch -y
+(venv) PS C:\Users\litl\PycharmProjects\gitProject\StudyDev> 
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+
+# 결과
+Looking in indexes: https://download.pytorch.org/whl/cu121, https://pypi.ngc.nvidia.com
+ERROR: Could not find a version that satisfies the requirement torch (from versions: none)
+ERROR: No matching distribution found for torch
+```
+3.13 CUDA 지원이 안되는 듯 하다. 3.12로 가상환경을 만들자.
+
+라이브러리 설치 후 인덱싱 중 wsl 을 사용하기 위한 구성 요소를 확인해달라는 창이 떴다.
+전에 파인튜닝했을때는 이런 것이 뜨지않았는데!?
+
+일단 실행시켜주었다. 아 가상환경잡을때 뜬것같은데 TODO 나중에확인하기.
+```shell
+# C:\Program Files\WSL\wsl.exe
+Windows 선택적 구성 요소 VirtualMachinePlatform 설치  
+배포 이미지 서비스 및 관리 도구  
+버전: 10.0.26100.1150  
+이미지 버전: 10.0.26100.4061
+```
+
+```shell
+(venv312) PS C:\Users\litl\PycharmProjects\gitProject\StudyDev>
+python -c "import torch; print(torch.cuda.get_device_name(0))"
+# 결과
+NVIDIA GeForce RTX 4050 Laptop GPU
+
+```
+
+TODO 별도의 finetuned 경로를 만들어서
+파인튜닝한 모델 + 변경한 토크나이저 + 체크포인트 저장하기
