@@ -1,3 +1,15 @@
+## 📄 Included Open Source Code
+
+This project includes the following open-source code files, which were adapted or directly used:
+
+- `convert_llama_weights_to_hf.py`:  
+  Source: [Hugging Face Transformers Repository](https://github.com/huggingface/transformers)  
+  License: Apache License 2.0  
+  Description: Used to convert Meta LLaMA weights to Hugging Face format.
+
+---
+
+
 C:\Users\litl\AppData\Local\Programs\Python\Python313\python.exe -m venv venv
 python version: 3.13
 pip freeze > FY2025LLM/requirements.txt
@@ -154,5 +166,43 @@ Downloading consolidated.00.pth ... 6.4GB
 Successfully downloaded model to C:\Users\litl\.llama\checkpoints\Llama3.2-3B
 View MD5 checksum files at: C:\Users\litl\.llama\checkpoints\Llama3.2-3B\checklist.chk
 [Optionally] To run MD5 checksums, use the following command: llama model verify-download --model-id Llama3.2-3B
-
 ```
+
+5, 모델이 다운로드 되었는지 확인하기.
+```text
+C:\Users\litl\.llama\checkpoints\Llama3.2-3B
+checklist.chk
+consolidated.00.pth
+params.json
+tokenizer.model
+```
+
+6. 라마 모델을 허깅페이스 구조로 변환하기. (공식 convert 소스 이용)
+```shell
+(venv) PS C:\Users\litl\PycharmProjects\gitProject\StudyDev>
+  
+python FY2025LLM/utils/huggingface/transformers/src/transformers/models/llama/convert_llama_weights_to_hf.py `
+  --input_dir "C:/Users/litl/.llama/checkpoints/Llama3.2-3B" `
+  --model_size 3B `
+  --llama_version 3.2 `
+  --output_dir "FY2025LLM/models/llama3.2-3B-hf" `
+  --safe_serialization
+```
+※ 참고로, nvidia 온라인 교육에서 받았던 convert_llama_weights_to_hf.py 를 실행하자, 아래와 같은 에러 문구(invalid)를 받았다.
+```shell
+usage: convert_llama_weights_to_hf.py [-h] [--input_dir INPUT_DIR] [--model_size {7B,7Bf,13B,13Bf,30B,34B,65B,70B,70Bf,tokenizer_only}] [--output_dir OUTPUT_DIR]
+                                      [--safe_serialization SAFE_SERIALIZATION]
+convert_llama_weights_to_hf.py: error: argument --model_size: invalid choice: '3B' (choose from 7B, 7Bf, 13B, 13Bf, 30B, 34B, 65B, 70B, 70Bf, tokenizer_only)
+```
+
+실습에 사용했던 모델과 소스는 이전 버전이라 그렇다. llama 공식 페이지에서 최신 모델을 받았음으로  
+그에 맞는 최신 convert 소스를 받아야 한다.   '
+링크: https://github.com/huggingface/transformers/blob/main/src/transformers/models/llama/convert_llama_weights_to_hf.py  
+
+---
+1일차, 모델을 돌려보며,
+- LLaMA 3.2 모델은 대화형 prompt 포맷이 필요하다. 
+- Instruct 버전이 아닌 **Base 모델(Llama3.2-3B)**은 instruction tuning이 되어 있지 않기 때문.
+- huggingface 에서 한국어 챗봇을 위한 데이터 셋을 다운받아 파인튜닝을 해보자. 
+- Top-k / Top-p / Temperature 설정 
+- EOS 토큰 설정
