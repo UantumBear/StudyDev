@@ -1,24 +1,16 @@
-## 📄 Included Open Source Code
 
-This project includes the following open-source code files, which were adapted or directly used:
+## Study
 
-- `convert_llama_weights_to_hf.py`:  
-  Source: [Hugging Face Transformers Repository](https://github.com/huggingface/transformers)  
-  License: Apache License 2.0  
-  Description: Used to convert Meta LLaMA weights to Hugging Face format.
-
----
-
-
+#### Settings 
 C:\Users\litl\AppData\Local\Programs\Python\Python313\python.exe -m venv venv
 python version: 3.13
 pip freeze > FY2025LLM/requirements.txt
 
 
-0. 모델 다운로드를 위한 llama 페이지에서의 url 발급
+#### 0. 모델 다운로드를 위한 llama 페이지에서의 url 발급
 https://www.llama.com/llama-downloads/ 
-
-#### Requested models:
+ 
+Requested models:
 - Llama 3.3: 70B  
 - Llama 3.2: 1B & 3B  
 - Llama 3.2: 11B & 90B  
@@ -26,7 +18,7 @@ https://www.llama.com/llama-downloads/
 
 ---  
 
-1) Llama CLI 설치하기
+#### 1. Llama CLI 설치하기
 ```shell
 pip install llama-stack
 ```
@@ -34,7 +26,7 @@ pip install llama-stack
 # pip install llama-stack # 이전 버전이 있었을 경우 업그레이드
 ```
 
-2. 내 nvidia gpu 확인하기
+#### 2. 내 nvidia gpu 확인하기
 ```shell
 nvidia-smi
 ```
@@ -62,7 +54,7 @@ nvidia-smi
 
 ```
 
-3. 모델 리스트 확인하기 
+#### 3. 모델 리스트 확인하기 
 ```shell
 llama download --model llama3-2-3b
 ```
@@ -150,7 +142,7 @@ llama model list
 llama model list --show-all
 ```
 
-4. 모델 다운로드 하기
+#### 4. 모델 다운로드 하기
 ```shell
 llama model download --source meta --model-id  MODEL_ID
 llama model download --source meta --model-id Llama3.2-3B
@@ -168,7 +160,7 @@ View MD5 checksum files at: C:\Users\litl\.llama\checkpoints\Llama3.2-3B\checkli
 [Optionally] To run MD5 checksums, use the following command: llama model verify-download --model-id Llama3.2-3B
 ```
 
-5, 모델이 다운로드 되었는지 확인하기.
+#### 5. 모델이 다운로드 되었는지 확인하기.
 ```text
 C:\Users\litl\.llama\checkpoints\Llama3.2-3B
 checklist.chk
@@ -177,7 +169,7 @@ params.json
 tokenizer.model
 ```
 
-6. 라마 모델을 허깅페이스 구조로 변환하기. (공식 convert 소스 이용)
+#### 6. 라마 모델을 허깅페이스 구조로 변환하기. (공식 convert 소스 이용)
 ```shell
 (venv) PS C:\Users\litl\PycharmProjects\gitProject\StudyDev>
   
@@ -206,3 +198,10 @@ convert_llama_weights_to_hf.py: error: argument --model_size: invalid choice: '3
 - huggingface 에서 한국어 챗봇을 위한 데이터 셋을 다운받아 파인튜닝을 해보자. 
 - Top-k / Top-p / Temperature 설정 
 - EOS 토큰 설정
+
+
+#### 7. 챗봇형 한국어 데이터셋 선택하기.
+일단 허깅페이스에서 koInstruction 데이터 를 다운 받아본다. (CarrotAI/ko-instruction-dataset)
+
+※  "messages" 필드는 반드시 system → user → assistant 순으로 포함되어야 하며,
+LLaMA 3 모델은 이러한 multi-turn chat 형식의 데이터를 학습하는 데 최적화되어 있다고 한다.

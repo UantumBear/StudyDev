@@ -1,5 +1,8 @@
-""" python FY2025LLM/test/model_load.py """
+"""
+$ python FY2025LLM/test/model_load.py
 
+huggingface 구조로 변환한 모델을 로드하여 사용한다.
+"""
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
 # 경로는 변환한 모델 디렉토리
