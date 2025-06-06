@@ -147,9 +147,11 @@ llama model list --show-all
 ```shell
 llama model download --source meta --model-id  MODEL_ID
 llama model download --source meta --model-id Llama3.2-3B
+llama model download --source meta --model-id Llama3.2-1B
 ```
 위 명령어를 입력하면 다운로드를 위한 custom URL 을 입력해달라는 창이 뜬다.  
 0번 에서 정보를 입력하고 임시발급된 url 을 입력한다.
+3B가 CUDA Memory Out 이 나서 1B로 재 다운로드 받았다.
 ```shell
 # 결과
 Downloading checklist.chk       ... 156 bytes
@@ -253,3 +255,19 @@ NVIDIA GeForce RTX 4050 Laptop GPU
 
 TODO 별도의 finetuned 경로를 만들어서
 파인튜닝한 모델 + 변경한 토크나이저 + 체크포인트 저장하기
+
+TODO
+Error 
+```shell
+(1)
+RuntimeError: 
+CUDA error: 
+CUBLAS_STATUS_INTERNAL_ERROR when calling `cublasGemmEx( 
+handle, opa, opb, m, n, k, &falpha, a, CUDA_R_16F, lda, b, CUDA_R_16F, ldb, &fbeta, c, CUDA_R_16F, ldc, CUDA_R_32F, CUBLAS_GEMM_DEFAULT_TENSOR_OP)`
+(2) 메모리 부족
+RuntimeError: CUDA error: out of memory
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+```
