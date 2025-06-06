@@ -200,7 +200,11 @@ convert_llama_weights_to_hf.py: error: argument --model_size: invalid choice: '3
 - Instruct 버전이 아닌 **Base 모델(Llama3.2-3B)**은 instruction tuning이 되어 있지 않기 때문.
 - huggingface 에서 한국어 챗봇을 위한 데이터 셋을 다운받아 파인튜닝을 해보자. 
 - Top-k / Top-p / Temperature 설정 
-- EOS 토큰 설정
+- EOS 토큰 설정  
+2일차, 파인튜닝을 돌려보며,
+- VRAM 6GB 로는 3B는 턱없이 부족하다. (float 16, max_length, batch 조절)
+- 1B 는 float16에서 파인튜닝이 돌아간다.
+- loss:nan 발생으로 dataset 과 padding 부를 보고 있다. 
 
 
 #### 7. 챗봇형 한국어 데이터셋 선택하기.
