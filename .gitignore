@@ -38,9 +38,18 @@ CodingTest/bfs2.py
 venv312
 venv312/*
 # FY2025LLM 자료는 노출하지 말 것. 소스는 업로드
+FY2025LLM/model/secret
+FY2025LLM/model/secret/*
+# llama 모델은 재 업로드,재배포 불가하지 말 것.
+# 토이프로젝트를 만들때 개인 서버에만 따로 저장해서 실험 용도로만 쓰고, 깃허브에는 절대 올라가지 않도록 주의하자.
+FY2025LLM/models
+FY2025LLM/models/*
+# 모델 파인튜닝에 쓰인 모든 데이터는 깃에 올리지 않는다. (깃에는 md 파일에 출처만 명시 할 것)
 FY2025LLM/data
 FY2025LLM/data/*
 FY2025LLM/venv
 FY2025LLM/venv/*
 
+# 엔비디아 부트캠프
+bootcamp/nvidia250521
 

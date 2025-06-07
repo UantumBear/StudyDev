@@ -201,11 +201,37 @@ convert_llama_weights_to_hf.py: error: argument --model_size: invalid choice: '3
 - huggingface 에서 한국어 챗봇을 위한 데이터 셋을 다운받아 파인튜닝을 해보자. 
 - Top-k / Top-p / Temperature 설정 
 - EOS 토큰 설정  
+
 2일차, 파인튜닝을 돌려보며,
 - VRAM 6GB 로는 3B는 턱없이 부족하다. (float 16, max_length, batch 조절)
 - 1B 는 float16에서 파인튜닝이 돌아간다.
-- loss:nan 발생으로 dataset 과 padding 부를 보고 있다. 
+- loss:nan 발생으로 dataset 과 padding 부를 보고 있다.  
 
+3일차, 파인튜닝과 추론을 돌려보며,  
+기본 Llama Base Model 은 사전학습된 모델로, 챗봇 역할을 수행하려면  
+instruction following 능력 OR 대화형 응답 능력을 갖추도록 파인튜닝 하여야 한다. 
+기본 torch 로 직접 train 을 하자 계속해서 Loss: nan 이 발생하여 SFTTrainer() 로 튜닝을 해보았다.  
+학습이 실행 자체는 되나, tokenizer 와 model 의 size 가 맞지 않았다.  
+coverted 경로에 tokenizer.model 이 없어서, llama->hf 변환 후 직접 복붙해주었었는데,  
+튜닝 후에도 tokenizer.model 이 저장 되지 않았다.  
+tokenizer.json 을 보니 PretrainedTokenizer 로 설정되어있는데, 해당 변환 파일도 조금 수정 후 다시 클래스 이름을 맞춰서  
+진행해볼까 한다.  
+
+
+파인튜닝 기법은 크게 아래와 같은 것들이 있다.  
+##### SFT (Supervised Fine-Tuning)
+- 역할 지시 + 질문 + 답변 패턴을 학습
+- [{"role": ..., "content": ...}, ...] 구조의 chat 형식 데이터
+- SFTTrainer, HuggingFace Trainer  
+- 챗봇의 성격을 형성하는 핵심 단계
+- "system/user/assistant" 역할로 구성된 대화 데이터를 넣고, assistant의 답변을 학습한다.
+
+##### PEFT (LoRA, QLoRA, LoHa, LOLA 등)
+- 파인 튜닝 시, 일부 파라미터만 업데이트 하는 기법
+
+##### RLHF (Reinforcement Learning with Human Feedback)
+- 모델의 응답을 더 잘 정제하기 위한, 보상 모델 학습
+- trl, accelerate, reward_model, PPOTrainer
 
 #### 7. 챗봇형 한국어 데이터셋 선택하기.
 일단 허깅페이스에서 koInstruction 데이터 를 다운 받아본다. (CarrotAI/ko-instruction-dataset)
