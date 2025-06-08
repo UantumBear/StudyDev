@@ -469,6 +469,18 @@ class Llama3Converter(TikTokenConverter):
             clean_up_tokenization_spaces=True,
             **additional_kwargs,
         )
+        """
+        @UantumBear@Study
+        PreTrainedTokenizerFast 란?
+        Huggingface 에서 제공하는 추상 클래스로, 내부에 SentencePiece, Fast Tokenizer 가 들어가있다.
+        LlamaTokenizerFast 도 이것을 기반으로 만들어진 것.
+        @try 
+        tokenizer.json 에서 아래처럼 모델이름을 명시하도록 변경하고, 파인튜닝하여 tokenizer.model 이 저장되는지 시도해보자.
+        {
+          "tokenizer_class": "LlamaTokenizerFast"
+        }
+        """
+
         self.update_post_processor(self.converted_tokenizer)
         # finer special_tokens_map.json
         self.converted_tokenizer._bos_token = BOS_ADDED_TOKEN

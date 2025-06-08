@@ -1,7 +1,7 @@
 # model_run.py
 
-from transformers import AutoTokenizer, AutoModelForCausalLM
-from transformers import LlamaTokenizerFast
+from transformers import AutoTokenizer, AutoModelForCausalLM, LlamaTokenizerFast
+# PreTrainedTokenizer 는 추상클래스로 이것을 가져다 쓰지 않음.
 import torch
 
 # === 경로 설정 ===
@@ -11,10 +11,10 @@ MODEL_DIR = "FY2025LLM/models/llama3.2-1B-hf/finetuned/model_v1"
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # === 토크나이저 로드 ===
-tokenizer = LlamaTokenizerFast.from_pretrained(MODEL_DIR, use_fast=True)
+tokenizer = AutoTokenizer.from_pretrained(MODEL_DIR, use_fast=True)
 # === 모델 로드 ===
 model = AutoModelForCausalLM.from_pretrained(MODEL_DIR, torch_dtype=torch.float16)
-model.resize_token_embeddings(len(tokenizer)) # === 모델도 리사이즈 필요 (새 토큰 추가 시)
+# model.resize_token_embeddings(len(tokenizer)) # === 모델도 리사이즈 필요 (새 토큰 추가 시)
 model.to(device)
 model.eval()
 # !! tokenizer vocal 과 model embedding 의 size 가 동일해야 한다.
