@@ -24,6 +24,10 @@ print(CURRENT_DIR)
 # 파일 경로
 HWP_FILE_NAME = "아래아21_테스트01.hwp"
 HWP_FILE_PATH = os.path.join(CURRENT_DIR, "data", HWP_FILE_NAME)
+
+HWP_FILE_NAME2 = "sample-5017.hwp"
+HWP_FILE_PATH2 = os.path.join(CURRENT_DIR, "data", HWP_FILE_NAME2)
+
 print(f"HWP_FILE_PATH: {HWP_FILE_PATH}")
 def extract_text_via_hwp5txt(hwp_path: str) -> str:
     try:
@@ -95,8 +99,30 @@ def detect_hwp_format(path: str):
         print("[INFO] HWPX 포맷 (ZIP 기반)입니다.")
     else:
         print("[WARN] 알 수 없는 HWP 포맷입니다.")
+    print(f"[DEBUG] 파일 : {path}")
     print(f"[DEBUG] 파일 시그니처: {signature}")
 
 if __name__ == "__main__":
+    print("========================================================================")
     detect_hwp_format(HWP_FILE_PATH)
+    print("------------------------------------------------------------------------")
+    detect_hwp_format(HWP_FILE_PATH2)
+
+
+if __name__ == "__main__":
+    print("========================================================================")
+    text = extract_text_via_hwp5txt(HWP_FILE_PATH2)
+    if text:
+        print("=== 추출된 텍스트 ===")
+        print(text)
+
+        # 텍스트 파일로 저장
+        output_path = HWP_FILE_PATH2.replace('.hwp', '.txt')
+        with open(output_path, 'w', encoding='utf-8') as f:
+            f.write(text)
+        print(f"[INFO] 저장 완료: {output_path}")
+
+# 드디어 된다! pyhwp 파일이 구버전 지원을 안해서 안되었던 문제였다..
+# 방법이 없을까?
+
 # Pycharm Terminal (Windows): python utilities/elastic/test_hwp.py
