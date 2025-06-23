@@ -28,7 +28,7 @@ class AzureBlobStorageClient:
 
             if missing_keys:
                 for key in missing_keys:
-                    print(f"[❌ 환경변수 누락] {key} is missing.")
+                    print(f"[환경변수 누락] {key} is missing.")
 
 
             raise EnvironmentError("Blob 관련 환경변수가 누락되어 초기화에 실패했습니다.")
