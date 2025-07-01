@@ -1,0 +1,8 @@
+# 이 파일은 devbear Local PC 의 Windows - Linux (WSL) 환경을 동기화 할 때, 동기화를 무시할 파일 경로를 관리하는 파일이다. 
+.vscode
+.git/
+venv*/
+venv312/
+__pycache__/
+*.pyc
+*.ipynb_checkpoints/

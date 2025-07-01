@@ -1,20 +1,30 @@
-##### 1. Pycharm 에서 Ubuntu 터미널 접속
+# Linux 가상 환경 구축하기
+나는 항상 Windows 가상 환경만 사용해 보았다.  
+이번에는 Linux 가상 환경을 사용해보려 한다.  
 
+## Try History 1
 
-###### 외부 저장소(PPA) 목록 확인하기
+### 1.1 외부 저장소(PPA) 목록 확인하기
+아래의 내용은 Pycharm 에서 Ubuntu 터미널에 접속하여 진행했다.
+
 이미 외부 저장소가 있는 지 확인한다.
-```shell
+```bash
 ls /etc/apt/sources.list.d/
 ```
 
-###### 외부 저장소(PPA) 등록하기 
+### 1.2 외부 저장소(PPA) 등록하기 
 만약 없다면, (Ubuntu에 기본적으로 제공하지 않는) 다양한 Python 버전(예: 3.7, 3.11, 3.12 등)을 설치하기 위해    
 신뢰할 수 있는 외부 저장소를 등록해야 한다.  
-```shell
+```bash
 sudo add-apt-repository ppa:deadsnakes/ppa
 ```
-결과:Ubuntu PW 를 입력하라는 메시지가 떴다. 패스워드를 입력하자 아래와 같은 결과를 받았다.
-```shell
+###### 결과:
+Ubuntu PW 를 입력하라는 메시지가 떴다.  
+위에서, PPA를 시스템에 등록하고자 했는데,  
+sudo 명령어를 사용해서 시스템 권한이 필요했기 때문이다.  
+
+패스워드를 입력하자 아래와 같은 결과를 받았다.
+```bash
 Repository: 'deb https://ppa.launchpadcontent.net/deadsnakes/ppa/ubuntu/ jammy main'
 Description:
 This PPA contains more recent Python versions packaged for Ubuntu.
@@ -79,9 +89,12 @@ More info: https://launchpad.net/~deadsnakes/+archive/ubuntu/ppa
 Adding repository.
 Press [ENTER] to continue or Ctrl-c to cancel.
 ```
->> 결과:
-Enter 를 입력하자 jammy 라는 파일들이 다운로드 되었다.
-```shell
+
+###### 결과:  
+Enter 를 입력하자 jammy 라는 파일들이 다운로드 되었다.  
+이것은 PPA의 메타데이터(패키지 목록) 자동 다운로드되는 과정이다.  
+
+```bash 
 Adding deb entry to /etc/apt/sources.list.d/deadsnakes-ubuntu-ppa-jammy.list
 Adding disabled deb-src entry to /etc/apt/sources.list.d/deadsnakes-ubuntu-ppa-jammy.list
 Adding key to /etc/apt/trusted.gpg.d/deadsnakes-ubuntu-ppa.gpg with fingerprint F23C5A6CF475977595C89F51BA6932366A755776
@@ -126,14 +139,20 @@ Fetched 17.9 MB in 7s (2737 kB/s)
 Reading package lists... Done
 ```
 
-아래 명령어를 입력하여 최신 패키지 목록을 받아오자.
-```shell
+### 1.3 외부 저장소(PPA)에 등록된 패키지 목록 가져오기.
+아래 명령어를 입력하여 최신 패키지 목록을 받아오자.  
+(apt install 을 하기 위함)
+
+```bash
 # devbear@BOOK-MB2VJ96366:/mnt/c/Users/litl/PycharmProjects/gitProject/StudyDev$ 
 sudo apt update
 ```
+
 위 명령어를 입력하자, jammy 와 관련된 정보들을 읽는 것이 보였다.
-```shell
-## 결과 
+
+###### 결과:
+
+```bash 
 Hit:1 http://archive.ubuntu.com/ubuntu jammy InRelease                                                                                                               
 Hit:2 http://security.ubuntu.com/ubuntu jammy-security InRelease                 
 Hit:3 http://archive.ubuntu.com/ubuntu jammy-updates InRelease                   
@@ -144,14 +163,19 @@ Building dependency tree... Done
 Reading state information... Done
 147 packages can be upgraded. Run 'apt list --upgradable' to see them.
 ```
-sudo apt install python3.12 python3.12-venv python3.12-dev -y
 
-파이썬 3.12 버전을 설치하자. (Ubuntu 의 환경을 바꾸는 것이 아닌, 윈도우에서 설치파일 깔 듯 설치 하는 것)
-```shell
+### 1.4 Linux 에 Python 설치하기
+
+파이썬 3.12 버전을 설치하자.  
+(Ubuntu 의 환경을 바꾸는 것이 아닌, 윈도우에서 설치파일 깔 듯 설치 하는 것)
+
+```bash
 sudo apt install python3.12 python3.12-venv python3.12-dev -y
 ```
-```shell
-# 결과
+
+###### 결과:
+
+```bash
 Reading package lists... Done
 Building dependency tree... Done
 Reading state information... Done
@@ -207,64 +231,170 @@ Setting up python3.12-dev (3.12.11-1+jammy1) ...
 Processing triggers for man-db (2.10.2-1) ...   
 
 ```
+
 설치가 되었으니, 가상환경을 생성하자.
-```shell
-devbear@BOOK-MB2VJ96366:/mnt/c/Users/litl/PycharmProjects/gitProject/StudyDev$ cd FY2025LLM                                                                                                     
-devbear@BOOK-MB2VJ96366:/mnt/c/Users/litl/PycharmProjects/gitProject/StudyDev/FY2025LLM$  
+
+### 1.5 가상 환경 생성 및 활성화
+
+```bash
+# devbear@BOOK-MB2VJ96366:/mnt/c/Users/litl/PycharmProjects/gitProject/StudyDev$
+cd FY2025LLM                                                                                                     
+# devbear@BOOK-MB2VJ96366:/mnt/c/Users/litl/PycharmProjects/gitProject/StudyDev/FY2025LLM$  
+
 python3.12 -m venv venvLinuxPy312
 ```
-가상환경이 생성되었으니, 가상환경을 활성화 하자.
-```shell
+
+가상환경이 생성되었으니, 가상환경을 활화화 하자.
+
+```bash
 source venvLinuxPy312/bin/activate
 ```
 
-```shell
-export PYTHONPATH=/mnt/c/Users/litl/PycharmProjects/gitProject/StudyDev/FY2025LLM
-python3 Elasticsearch/testrun.py
-```
+> Fail 
+>```bash
+>export PYTHONPATH=/mnt/c/Users/litl/PycharmProjects/gitProject/StudyDev/FY2025LLM python3 Elasticsearch/testrun.py
+>```
+> 우분투환경에서 가상환경을 만들고,  
+> elasticsearch 서버를 >연결하려 하자 connect False 가 떴다.  
+> WSL에서 localhost는 WSL 리눅스 내부를 의미하고,  
+> Windows에서 열어놓은 localhost와는 완전히 별개 여서 그런 것 같다.
 
-우분투환경에서 가상환경을 만들고, elasticsearch 서버를 연결하려 하자 connect False 가 떴다.
-WSL에서 localhost는 WSL 리눅스 내부를 의미하고,
-Windows에서 열어놓은 localhost와는 완전히 별개 여서 그런 것 같다.
+> ##### Windows host IP 확인하기
+> ```shell
+> ((venvLinuxPy312) ) devbear@BOOK-MB2VJ96366:/mnt/c/Users/litl/>PycharmProjects/gitProject/StudyDev/FY2025LLM$ cat /etc/resolv.conf | grep nameserver
+> ```
 
-##### Windows host IP 확인하기
-```shell
-((venvLinuxPy312) ) devbear@BOOK-MB2VJ96366:/mnt/c/Users/litl/PycharmProjects/gitProject/StudyDev/FY2025LLM$ cat /etc/resolv.conf | grep nameserver
-```
-```shell
-# 결과
-nameserver 10.255.255.254
-```
-```shell
+> ```shell
+> # 결과
+> nameserver 10.255.255.254
+> ```
 
-```
-curl -k https://10.255.255.254:9200
-```shell
-# 결과
-curl: (7) Failed to connect to 10.255.255.254 port 9200 after 0 ms: Connection refused
-```
-Window 에서 elasticsearch 서버 설정을 변경해줘야 할것같다. (접근 허용하도록)
+> ```shell
+> curl -k https://10.255.255.254:9200
+> ```
 
----
+> ```shell
+> # 결과
+> curl: (7) Failed to connect to 10.255.255.254 port 9200 after 0 ms: Connection refused
+> ```
 
-일단, VSCode 로 옮겨 왔다. (아무래도 Pycharm 무료 버전이 WSL 호환이 안되는 듯 하다.)  
-Connect to WSL 에서 Ubuntu 환경을 클릭하고,  
-/home/devbear/dev_projects/StudyDev/FY2025LLM 을 선택했다.  
+> Window 에서 elasticsearch 서버 설정을 변경해줘야 할것같다. (접근 허용하도록)
+> 
+>  
+> 일단, `VSCode` 로 옮겨 왔다. (아무래도 Pycharm 무료 버전이 WSL 호환이 안되는 듯 하다.)  
+> Connect to WSL 에서 Ubuntu 환경을 클릭하고,  
+> /home/devbear/dev_projects/StudyDev/FY2025LLM 을 선택했다.  
 
-그리고 다시 가상환경을 만들어주었다.
-```shell
+> 그리고 다시 가상환경을 만들어주었다.
+
+## Try History 2
+### 2.1 가상 환경 생성 및 활성화
+
+```bash
 # 우분투 버전 조회 하기
 # devbear@BOOK-MB2VJ96366:~/dev_projects/StudyDev/FY2025LLM$ 
 lsb_release -a
+
 # 가상 환경 생성하기
 python3.12 -m venv venvUbun2204Py312
+
 # 가상 환경 활성화 하기
-devbear@BOOK-MB2VJ96366:~/dev_projects/StudyDev/FY2025LLM$ source venvUbun2204Py312/bin/activate
+# devbear@BOOK-MB2VJ96366:~/dev_projects/StudyDev/FY2025LLM$  
+source venvUbun2204Py312/bin/activate
 
 ```
 
-```shell
+```bash
 # 아래 명령어는 시스템 환경에서 실행
 sudo apt update
 sudo apt install -y libgsf-1-dev libxml2-dev libxslt1-dev python3-dev
+```
+
+근데 대체 이 갤럭시북4 내에 있는 리눅스 환경이 무얼까?  
+아래 명령어를 입력해보았다.  
+```bash
+uname -a 
+```
+```bash
+# 결과
+Linux BOOK-MB2VJ96366 5.15.153.1-microsoft-standard-WSL2 #1 SMP Fri Mar 29 23:14:13 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux
+```
+
+`WSL2` (Windows Subsystem for Linux2) 라고 한다.  
+Windows 에서 돌아가는 가상환경이며, 물리 GPU는 Windows 에서 제어하고,  
+WSL2는 이를 공유해서 사용하는 구조라고 한다.  
+때문에 **리눅스 환경에 CUDA 드라이브를 또 설치하는 방식이 아니며,**  
+WSL2 안에서는 CUDA Toolkit 을 설치하라고 한다.  
+(필요시 선택, Pytorch, Tensorflow 이용 시에는 wheel 내에서 제공하기 때문에 따로 설치할 필요 없다고 한다. )
+
+```bash
+# Windows cmd
+# C:\Users\litl>
+nvidia-smi
+```
+###### 결과:
+```bash
+Tue Jul  1 18:59:04 2025
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 560.94                 Driver Version: 560.94         CUDA Version: 12.6     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                  Driver-Model | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce RTX 4050 ...  WDDM  |   00000000:01:00.0 Off |                  N/A |
+| N/A   47C    P0             14W /   79W |       0MiB /   6141MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+
+```
+
+가상환경에 적당히 `CUDA`와 함께 쓸 라이브러리를 다운받아 본다. 
+```bash
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
+
+# 설치 후 설치 되었는 지 확인 (True 를 반환받아야 함)
+python -c "import torch; print(torch.cuda.is_available())"
+
+```
+
+```bash
+# 현재 상태가 소스코드는 윈도우 환경에 있어서, WSL2 는 마운팅해서 연결된 상태이고
+# 리눅스 가상환경은 리눅스 환경에 있는 상태이다.
+# 소스 코드를 돌릴 떈 윈도우 환경에서 명령어를 입력해보자.
+# C:\Users\litl\PycharmProjects\gitProject\StudyDev\FY2025LLM\venvLinuxPy312가상환경생성하기.md
+# 
+((venvUbun2204Py312) ) devbear@BOOK-MB2VJ96366:/mnt/c$ whoami
+devbear
+
+## 정리하면,
+# 가상환경은 리눅스에
+# VSCode 에서 사용하는 파일들은 윈도우에
+# VSCode wsl Terminal 에서는 /mnt/c 마운팅을 통해 윈도우 경로의 파일들에 접근 할 수 있음!
+```
+
+### 2.2 Windows 와 Linux 프로젝트 동기화
+프로젝트를 정상적으로 이용하기 위해, Windows 시스템 내의 파일을 WSL2 로 옮겨보자.  
+`.syncignore` 라는 파일을 만들어서, 동기화 하지 않을 목록을 작성했고,  
+`sync_project.sh` 를 실행하여 간단히 동기화를 시켜주도록 만들었다.  
+(물론 처음 해보고 있어서, 이게 다 잘 하고 있는 지는 나중에 봐야 알 것 같다.)
+
+```bash
+# 실행 권한 부여 (최초 1회만 필요)
+chmod +x /mnt/c/Users/litl/PycharmProjects/gitProject/StudyDev/FY2025LLM/sync_project.sh
+```
+
+동기화를 원할 때 마다 이제 아래 명령어를 통해 Windows 시스템 내의 파일들을 Linux 시스템으로 옮길 수 있다.
+
+```bash
+# 실행 (매번 가능)
+bash /mnt/c/Users/litl/PycharmProjects/gitProject/StudyDev/FY2025LLM/sync_project.sh
 ```
