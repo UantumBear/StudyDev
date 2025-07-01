@@ -61,7 +61,8 @@ FY2025LLM/venv/*
 FY2025LLM/venvLinuxPy312
 FY2025LLM/venvLinuxPy312/*
 #
-FY2025LLM/utils/pyhwp/pywhp/*
+FY2025LLM/utils/pyhwp/pyhwp
+FY2025LLM/utils/pyhwp/pyhwp/*
 # sample-5017.hwp 한글 문서 변환 테스트를 위해 임의로 인터넷에서 다운받은 문서. 내용을 조회해 보지 않았음.
 FY2025LLM/utilities/elastic/data/sample-5017.hwp
 FY2025LLM/utilities/elastic/data/sample-5017.txt
