@@ -302,6 +302,11 @@ python3.12 -m venv venvUbun2204Py312
 # devbear@BOOK-MB2VJ96366:~/dev_projects/StudyDev/FY2025LLM$  
 source venvUbun2204Py312/bin/activate
 
+# 어느 경로에서든
+source /home/devbear/dev_projects/StudyDev/FY2025LLM/venvUbun2204Py312/bin/activate
+
+# 경로 이동
+cd /home/devbear/dev_projects/StudyDev/FY2025LLM
 ```
 
 ```bash
@@ -398,3 +403,32 @@ chmod +x /mnt/c/Users/litl/PycharmProjects/gitProject/StudyDev/FY2025LLM/sync_pr
 # 실행 (매번 가능)
 bash /mnt/c/Users/litl/PycharmProjects/gitProject/StudyDev/FY2025LLM/sync_project.sh
 ```
+
+### 2.3 Windows 와 Linux 프로젝트 자동 동기화
+수동으로 프로젝트를 동기화 하는 것이, 명령어 복사만 하면 됨에도, 생각보다 불편하다.  
+개발 중에는 자동으로 감지하도록 해보자.  
+
+#### whl info
+```bash
+# [Windows Powershell]
+wsl --list --verbose
+```
+###### 결과
+```bash
+  NAME              STATE           VERSION
+* docker-desktop    Stopped         2
+  Ubuntu            Running         2
+```
+위 결과는, 기본 wsl 이 docker-desktop 으로 되어 있다는 뜻이다.  
+Ubuntu 로 변경해주자.
+```bash
+# [Windows Powershell]
+wsl --set-default Ubuntu
+```
+###### 결과
+```bash
+작업을 완료했습니다. 
+```
+
+이제, 명령어를 입력해둘 .bat 파일을 만든다.  
+.bat 파일을 만들면, 매번 Powershell 에 긴 명령어를 입력하지 않고, 파일만 실행해서 작업을 할 수 있다.  

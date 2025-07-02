@@ -4,8 +4,13 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, LlamaTokenizerFast
 # PreTrainedTokenizer 는 추상클래스로 이것을 가져다 쓰지 않음.
 import torch
 
+from config.conf import PROJECT_ROOT_DIRECTORY
+
+# 한번 테스트해봅니다. 헤헤 파일이 감시되려나?
+
+
 # === 경로 설정 ===
-MODEL_DIR = "FY2025LLM/models/llama3.2-1B-hf/finetuned/model_v1"
+MODEL_DIR = rf"{PROJECT_ROOT_DIRECTORY}\models\llama3.2-1B-hf\finetuned\model_v1"
 
 # === 디바이스 설정 ===
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
