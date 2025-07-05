@@ -3,7 +3,7 @@ azure 의 기본 기능들을 테스트하기 위한 테스트 스크립트
 @ utils/azure/test/test_blob_upload.py
 """
 import os
-from utilities.azure.azure_blob_storage_client import AzureBlobStorageClient
+from utils.azure.azure_blob_storage_client import AzureBlobStorageClient
 from config import conf
 from dotenv import load_dotenv
 

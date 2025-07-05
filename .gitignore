@@ -54,18 +54,23 @@ FY2025LLM/model/secret/*
 FY2025LLM/models
 FY2025LLM/models/*
 # 모델 파인튜닝에 쓰인 모든 데이터는 깃에 올리지 않는다. (깃에는 md 파일에 출처만 명시 할 것)
-FY2025LLM/data
-FY2025LLM/data/*
+FY2025LLM/data/CarrotAI
+FY2025LLM/data/converted
+FY2025LLM/data/groupware
+FY2025LLM/data/test
+# DevBear 는 예외
+FY2025LLM/data/DevBear/*
+!FY2025LLM/data/DevBear/readme.md
+#
 FY2025LLM/venv
 FY2025LLM/venv/*
 FY2025LLM/venvLinuxPy312
 FY2025LLM/venvLinuxPy312/*
-#
-FY2025LLM/utils/pyhwp/pyhwp
-FY2025LLM/utils/pyhwp/pyhwp/*
+# 외부 유틸 (thirdparty) 는 전체 무시한다.
+FY2025LLM/utils/thirdparty
 # sample-5017.hwp 한글 문서 변환 테스트를 위해 임의로 인터넷에서 다운받은 문서. 내용을 조회해 보지 않았음.
-FY2025LLM/utilities/elastic/data/sample-5017.hwp
-FY2025LLM/utilities/elastic/data/sample-5017.txt
+FY2025LLM/utils/elastic/data/sample-5017.hwp
+FY2025LLM/utils/elastic/data/sample-5017.txt
 # Elasticsearch 관련
 Elasticsearch/config
 Elasticsearch/config/*

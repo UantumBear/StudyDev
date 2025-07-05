@@ -29,9 +29,10 @@ from pathlib import Path
 
 base_dir = Path(conf.PROJECT_ROOT_DIRECTORY)
 MODEL_PATH   = str( base_dir / "models" / "llama3.2-1B-hf" )
-DATASET_PATH = str( base_dir / "data" / "converted" / "CarrotAI" / "cleaned_llama3_dataset.jsonl" )
-SAVE_PATH    = str( base_dir / "models" / "llama3.2-1B-hf" / "finetuned" / "model_v2" )
-
+# DATASET_PATH = str( base_dir / "data" / "converted" / "CarrotAI" / "cleaned_llama3_dataset.jsonl" )
+# SAVE_PATH    = str( base_dir / "models" / "llama3.2-1B-hf" / "finetuned" / "model_v3" )
+DATASET_PATH = str( base_dir / "data" / "converted" / "DevBear" / "cleaned_llama3_dataset.jsonl" )
+SAVE_PATH    = str( base_dir / "models" / "llama3.2-1B-hf" / "finetuned" / "model_v4_DevBear" )
 os.makedirs(SAVE_PATH, exist_ok=True)
 
 # GPU 사용 여부 확인, 환경 설정
@@ -111,9 +112,8 @@ eval_dataset = split_dataset["test"]
 def formatting_prompts_func(example):
     # example['messages']는 [{'role': 'user', ...}, {'role': 'assistant', ...}] 형태의 리스트
     # apply_chat_template을 사용하면 SFTTrainer가 내부적으로 prompt 부분의 loss를 무시하도록 처리한다.
-    return [tokenizer.apply_chat_template(conversation, tokenize=False) for conversation in example["messages"]]
-    # return tokenizer.apply_chat_template(example['messages'], tokenize=False, add_generation_prompt=False)
-
+    # return [tokenizer.apply_chat_template(conversation, tokenize=False) for conversation in example["messages"]]
+    return tokenizer.apply_chat_template(example['messages'], tokenize=False, add_generation_prompt=False)
 
 # 모델 로드
 # bf16 지원 여부를 확인하여 학습 안정성을 높인다.

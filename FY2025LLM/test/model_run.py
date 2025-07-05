@@ -3,25 +3,42 @@
 from transformers import AutoTokenizer, AutoModelForCausalLM, LlamaTokenizerFast
 # PreTrainedTokenizer 는 추상클래스로 이것을 가져다 쓰지 않음.
 import torch
-
+from pathlib import Path
+from peft import PeftModel
 from config.conf import PROJECT_ROOT_DIRECTORY
 
 # 한번 테스트해봅니다. 헤헤 파일이 감시되려나?
 
 
 # === 경로 설정 ===
-MODEL_DIR = rf"{PROJECT_ROOT_DIRECTORY}\models\llama3.2-1B-hf\finetuned\model_v1"
+# MODEL_DIR = f"{PROJECT_ROOT_DIRECTORY}/models/llama3.2-1B-hf/finetuned/model_v1"
+
+# === 경로 설정 ===
+base_model_path = str(Path(PROJECT_ROOT_DIRECTORY) / "models" / "llama3.2-1B-hf")
+adapter_path = str(Path(PROJECT_ROOT_DIRECTORY) / "models" / "llama3.2-1B-hf" / "finetuned" / "model_v1")
 
 # === 디바이스 설정 ===
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # === 토크나이저 로드 ===
-tokenizer = AutoTokenizer.from_pretrained(MODEL_DIR, use_fast=True)
-# === 모델 로드 ===
-model = AutoModelForCausalLM.from_pretrained(MODEL_DIR, torch_dtype=torch.float16)
-# model.resize_token_embeddings(len(tokenizer)) # === 모델도 리사이즈 필요 (새 토큰 추가 시)
-model.to(device)
-model.eval()
+tokenizer = AutoTokenizer.from_pretrained(adapter_path, use_fast=True)
+
+
+# === base 모델 로드 ===
+base_model = AutoModelForCausalLM.from_pretrained(
+    base_model_path,
+    torch_dtype=torch.float16,
+    device_map="auto"  # vLLM 쓰는 게 아니라면 괜찮습니다
+)
+
+# === LoRA adapter 붙이기 ===
+model = PeftModel.from_pretrained(base_model, adapter_path)
+model.eval()  # 평가 모드로 전환
+# model.to(device) ← device_map="auto" 덕분에 보통 생략 가능. 명시하고 싶으면 OK
+
+
+
+#
 # !! tokenizer vocal 과 model embedding 의 size 가 동일해야 한다.
 print("tokenizer vocab size:", tokenizer.vocab_size)
 print("model embedding size:", model.get_input_embeddings().num_embeddings)
@@ -72,5 +89,5 @@ while True:
     print(f"Assistant: {response.strip()}")
 
 
-
-    # python FY2025LLM/test/model_run.py
+# export PYTHONPATH=/home/devbear/dev_projects/StudyDev/FY2025LLM
+# python FY2025LLM/test/model_run.py
