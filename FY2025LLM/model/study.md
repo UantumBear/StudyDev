@@ -61,7 +61,22 @@ CAUSAL_LM : GPT 계열 모델처럼 한 방향(좌->우) 으로 텍스트를 생
 SEQ_CLS   : 시퀀스 분류 (예: 감정 분류)  
 TOKEN_CLS : 토큰 분류 (예: 개체명 인식)  
 
+--- 
 
+### chat_templates 속성
+#### add_generation_prompt
+```add_generation_prompt=True``` 속성을 쓰면,   
+SFTTrainer는 assistant의 실제 답변 부분이 아닌, 생성 프롬프트(assistant 헤더 토큰) 이후의 내용을 생성하도록 학습하게 된다.  
+이는 모델이 실제로 "제 이름은 개발곰입니다."와 같은 완전한 답변을 생성하는 패턴을 학습하는 것을 방해할 수 있다.  
+
+### .
+#### bitsandbytes 라이브러리
+윈도우 환경에서는 bitsandbytes를 사용한 4비트 양자화가 어렵다.
+bf16/fp16을 사용한다.
+
+### SFTTrainer
+#### formatting_func
+데이터 포매팅 함수를 동적으로 적용
 
 
 
