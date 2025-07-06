@@ -1,3 +1,13 @@
+## FY2025LLM
+
+2025년 llm을 공부하는 경로
+```bash
+echo "# Generated on $(Get-Date -Format 'yyyy-MM-dd')" > requirements.txt; pip freeze >> requirements_loc_windows_venv312.txt
+```
+
+
+
+
 
 ## Study
 
