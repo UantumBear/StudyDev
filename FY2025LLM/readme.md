@@ -5,6 +5,8 @@
 echo "# Generated on $(Get-Date -Format 'yyyy-MM-dd')" > requirements.txt; pip freeze >> requirements_loc_windows_venv312.txt
 ```
 
+!! Instruction 모델로 드디어 개발곰의 이름을 받았다!
+![data/DevBear/png/llama3-instruction-devbear0001.png](data/DevBear/png/llama3-instruction-devbear0001.png)
 
 
 

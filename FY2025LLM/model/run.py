@@ -1,8 +1,10 @@
 # llama3_run.py
 from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig
 import torch
+from data.DevBear import system_prompt as pmpt
 
-MODEL_PATH = "models/llama3.2-1B-hf"  # 원본 모델 경로
+# MODEL_PATH = "models/llama3.2-1B-hf"  # 원본 모델 경로
+MODEL_PATH = ("models/meta-llama/Llama-3.2-1B-Instruct")
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 is_bf16 = torch.cuda.is_available() and torch.cuda.is_bf16_supported()
@@ -47,7 +49,8 @@ generation_config = GenerationConfig(
     repetition_penalty=1.1,
     do_sample=True,
     pad_token_id=tokenizer.pad_token_id,
-    eos_token_id=tokenizer.eos_token_id
+    eos_token_id=tokenizer.eos_token_id,
+    bos_token_id=tokenizer.bos_token_id
 )
 
 # 4. 대화 루프
@@ -58,7 +61,12 @@ while True:
         break
 
     messages = [
-        {"role": "system", "content": "당신은 정중하고 현실적인 한국어 챗봇입니다."},
+        {
+            "role": "system",
+            "content": (
+                pmpt.PROMPT_V1
+            )
+        },
         {"role": "user", "content": user_input}
     ]
 
@@ -79,3 +87,4 @@ while True:
     print(f"Assistant: {output_text.strip()}")
 
 ### 파인튜닝 되지 않은 모델은 기본 모델로 챗봇에는 적합하지 않은 모습
+# python model/run.py
