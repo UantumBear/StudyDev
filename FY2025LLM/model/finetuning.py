@@ -31,8 +31,8 @@ base_dir = Path(conf.PROJECT_ROOT_DIRECTORY)
 MODEL_PATH   = str( base_dir / "models" / "llama3.2-1B-hf" )
 # DATASET_PATH = str( base_dir / "data" / "converted" / "CarrotAI" / "cleaned_llama3_dataset.jsonl" )
 # SAVE_PATH    = str( base_dir / "models" / "llama3.2-1B-hf" / "finetuned" / "model_v3" )
-DATASET_PATH = str( base_dir / "data" / "converted" / "DevBear" / "cleaned_llama3_dataset.jsonl" )
-SAVE_PATH    = str( base_dir / "models" / "llama3.2-1B-hf" / "finetuned" / "model_v4_DevBear" )
+DATASET_PATH = str( base_dir / "data" / "converted" / "merged" / "train_total.jsonl" )
+SAVE_PATH    = str( base_dir / "models" / "llama3.2-1B-hf" / "finetuned" / "model_v4" )
 os.makedirs(SAVE_PATH, exist_ok=True)
 
 # GPU 사용 여부 확인, 환경 설정
@@ -49,7 +49,8 @@ print(f"Cached:    {round(torch.cuda.memory_reserved(0)/1024**3, 1)} GB")
 tokenizer = LlamaTokenizerFast.from_pretrained(
     MODEL_PATH,
     use_fast=True,
-    local_files_only=True
+    local_files_only=True,
+    legacy = False # legacy=True는 기존 방식,
 )
 tokenizer.pad_token = tokenizer.eos_token # 패딩 설정
 tokenizer.padding_side = "right" # 오른쪽으로 패딩을 붙임, Llama, GPT 계열
@@ -113,7 +114,8 @@ def formatting_prompts_func(example):
     # example['messages']는 [{'role': 'user', ...}, {'role': 'assistant', ...}] 형태의 리스트
     # apply_chat_template을 사용하면 SFTTrainer가 내부적으로 prompt 부분의 loss를 무시하도록 처리한다.
     # return [tokenizer.apply_chat_template(conversation, tokenize=False) for conversation in example["messages"]]
-    return tokenizer.apply_chat_template(example['messages'], tokenize=False, add_generation_prompt=False)
+    prompt = tokenizer.apply_chat_template(example['messages'], tokenize=False, add_generation_prompt=False)
+    return [prompt]
 
 # 모델 로드
 # bf16 지원 여부를 확인하여 학습 안정성을 높인다.
@@ -131,7 +133,7 @@ training_args = TrainingArguments(
     per_device_train_batch_size=1,
     # 작은 배치 사이즈를 보완하기 위해 그래디언트 축적(accumulation)을 사용한다.
     # 실질적인 배치 사이즈는 batch_size * accumulation_steps = 1 * 4 = 4가 된다.
-    gradient_accumulation_steps=2, # 키울 수록 메모리가 절약된다.
+    gradient_accumulation_steps=3, # 키울 수록 메모리가 절약된다.
     # bf16은 더 넓은 동적 범위를 가져 fp16보다 수치적으로 훨씬 안정적이라고 한다.
     bf16=is_bf16_supported, # (Ampere 아키텍처 GPU(예: RTX 30xx, A100) 이상에서 지원)
     fp16=not is_bf16_supported, # bf16을 지원하지 않는 경우에만 fp16을 사용한다. (오류 발생 가능성 있음)
@@ -207,40 +209,6 @@ trainer = SFTTrainer(
     callbacks=[EarlyStoppingCallback(early_stopping_patience=2)] # 검증 성능이 개선되지 않는 epoch가 2번 연속 발생하면 학습을 중단.
 )
 
-
-# Trainer 학습 파라미터 1. FullFineTuning Sets
-# training_args_FullFineTuning = TrainingArguments(
-#     output_dir=SAVE_PATH,
-#     per_device_train_batch_size=1,
-#     # 작은 배치 사이즈를 보완하기 위해 그래디언트 축적(accumulation)을 사용한다.
-#     # 실질적인 배치 사이즈는 batch_size * accumulation_steps = 1 * 4 = 4가 된다.
-#     gradient_accumulation_steps=4,
-#     #
-#     # bf16은 더 넓은 동적 범위를 가져 fp16보다 수치적으로 훨씬 안정적이라고 한다.
-#     bf16=is_bf16_supported, # (Ampere 아키텍처 GPU(예: RTX 30xx, A100) 이상에서 지원)
-#     fp16=not is_bf16_supported, # bf16을 지원하지 않는 경우에만 fp16을 사용한다. (오류 발생 가능성 있음)
-#     num_train_epochs=1,
-#     learning_rate=5e-6,
-#     logging_steps=10,
-#     save_steps=100,
-#     eval_strategy="steps", # 학습 도중 주기적으로 평가(evaluation)를 수행하도록 설정
-#     eval_steps=100,
-#     save_total_limit=1,
-#     load_best_model_at_end=True,
-#     metric_for_best_model="loss",
-#     greater_is_better=False,
-#     report_to="none"
-# )
-# # SFTTrainer 정의
-# trainer_FullFineTuning = SFTTrainer(
-#     model=model,
-#     args=training_args_FullFineTuning,
-#     train_dataset=train_dataset,  # 전처리되지 않은 원본 데이터셋을 전달
-#     eval_dataset=eval_dataset,  # 전처리되지 않은 원본 데이터셋을 전달
-#     formatting_func=formatting_prompts_func,  # 위에서 정의한 포매팅 함수 지정
-#     processing_class=tokenizer,
-#     callbacks=[EarlyStoppingCallback(early_stopping_patience=2)] # 검증 성능이 개선되지 않는 epoch가 2번 연속 발생하면 학습을 중단.
-# )
 """  Full FineTuning END """
 
 
