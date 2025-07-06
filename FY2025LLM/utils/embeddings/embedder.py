@@ -1,3 +1,8 @@
+"""
+@경로 utils/embeddings/embedder.py
+@역할 txt 파일의 벡터화를 수행한다.
+"""
+
 import os
 from sentence_transformers import SentenceTransformer
 from typing import List, Union
