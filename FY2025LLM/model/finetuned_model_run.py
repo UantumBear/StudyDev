@@ -1,4 +1,8 @@
-# model_run.py
+"""
+@경로 model/finetuned_model_run.py
+@목적 models/llama3.2-1B-hf/finetuned 하위의 llama3 Base 모델을 챗봇형 데이터로 파인튜닝한 모델을 실행하여 테스트 하는 역할
+"""
+
 
 from transformers import AutoTokenizer, AutoModelForCausalLM, LlamaTokenizerFast
 from transformers import GenerationConfig

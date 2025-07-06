@@ -1,6 +1,8 @@
-""" Llama 3.2 1B 파인튜닝
-# python FY2025LLM/model/finetuning.py
-# 환경
+"""
+@경로 model/finetuning.py
+@목적 models/llama3.2-1B-hf/ 하위의 llama3 Base 모델을 챗봇형 데이터로 파인튜닝하는 역할
+
+@ Llama 3.2 1B 파인튜닝
 @OS Windows
 @Python 3.12.1
 @NVIDIA-SMI 560.94 / Driver Version: 560.94 / CUDA Version: 12.6
