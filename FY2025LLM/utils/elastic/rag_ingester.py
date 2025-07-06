@@ -10,7 +10,8 @@ from typing import List, Dict
 
 
 class RAGIngestor:
-    def __init__(self, index_name: str = "test_index"):
+    def __init__(self,  embedding_dim: int, index_name: str = "test_index"):
+        self.embedding_dim = embedding_dim
         self.index_name = index_name
         self.es = Elasticsearch(
             hosts=conf.ELASTICSEARCH_HOST_LOC,
@@ -31,7 +32,7 @@ class RAGIngestor:
                 mappings={
                     "properties": {
                         "text": {"type": "text"},
-                        "embedding": {"type": "dense_vector", "dims": 768}
+                        "embedding": {"type": "dense_vector", "dims": self.embedding_dim}
                     }
                 }
             )
@@ -58,11 +59,13 @@ if __name__ == "__main__":
     from utils.embeddings.embedder import Embedder
     import os
 
+    # 임베딩 클래스 인스턴스 생성
     embedder = Embedder()
     file_path = os.path.join(conf.PROJECT_ROOT_DIRECTORY, "data/test/test.txt")
     data = embedder.embed_file(file_path)
+    embedding_dim = embedder.vector_dim # 임베더 클래스가 호출한 모델의 벡터 차원
 
-    ingestor = RAGIngestor(index_name="test_index")
+    ingestor = RAGIngestor(index_name="test2_index", embedding_dim=embedding_dim)
 
     # 기존 인덱스 삭제 (옵션)
     ingestor.es.indices.delete(index=ingestor.index_name)
