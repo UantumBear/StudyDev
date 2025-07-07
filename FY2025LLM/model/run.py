@@ -39,7 +39,7 @@ model.eval()
 
 if tokenizer.pad_token is None or tokenizer.pad_token == tokenizer.eos_token:
     tokenizer.add_special_tokens({'pad_token': '[PAD]'})
-    model.resize_token_embeddings(len(tokenizer)) # 모델이 로드되어야 resize가 가능
+    model.resize_token_embeddings(len(tokenizer))
 
 # 3. Generation config 설정
 generation_config = GenerationConfig(
