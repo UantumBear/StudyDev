@@ -313,3 +313,25 @@ For debugging consider passing CUDA_LAUNCH_BLOCKING=1
 Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
 
 ```
+
+
+###### 25.07.12 완성된 onnx 모델을 다운받아 사용해보기.
+
+##### Nvidia CLI 다운받기
+https://org.ngc.nvidia.com/setup/installers/cli
+C:\Users\litl\설치파일\file\setup.exe 실행
+C:\Users\litl\설치파일\file\ngccli\x86\ngc.exe registry model download-version nvidia/meta-llama-3.2-3b-onnx-int4-rtx:1.0
+-> 다운로드
+models/nvidia/meta-llama-3.2-3b-onnx-int4-rtx_v1.0/llama32_onnx_int4_genai_dml
+
+```bash
+[ERROR] cudnn 을 필요로 함
+상세:
+2025-07-12 21:40:37.7449497 [E:onnxruntime:Default, provider_bridge_ort.cc:2195 onnxruntime::TryGetProviderInfo_CUDA] D:\a\_work\1\s\onnxruntime\core\session\provider_bridge_ort.cc:1778 onnxru
+ntime::ProviderLibrary::Get [ONNXRuntimeError] : 1 : FAIL : Error loading "C:\Users\litl\PycharmProjects\gitProject\StudyDev\FY2025LLM\venv312\Lib\site-packages\onnxruntime\capi\onnxruntime_providers_cuda.dll" which depends on "cudnn64_9.dll" which is missing. (Error 126: "읠?
+
+[해결]
+환경 변수에 cudnn 경로를 등록
+```
+
+##### TensorRT SDK 다운로드
