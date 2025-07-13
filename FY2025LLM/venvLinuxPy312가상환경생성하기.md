@@ -432,3 +432,197 @@ wsl --set-default Ubuntu
 
 이제, 명령어를 입력해둘 .bat 파일을 만든다.  
 .bat 파일을 만들면, 매번 Powershell 에 긴 명령어를 입력하지 않고, 파일만 실행해서 작업을 할 수 있다.  
+
+### 2.4 CUDA 관련 설치
+```bash
+# [wsl 터미널에서]
+nvidia-smi
+
+# 결과
+devbear@BOOK-MB2VJ96366:/mnt/c/Users/litl/PycharmProjects/gitProject/StudyDev/FY2025LLM$ nvidia-smi
+Sun Jul 13 15:35:28 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 560.35.02              Driver Version: 560.94         CUDA Version: 12.6     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+
+```
+#### CUDA Toolkit 12.6
+링크: `https://developer.nvidia.com/cuda-12-6-0-download-archive`
+위 경로에서 내게 필요한 버전을 선택한다.  
+CUDA Toolkit 12.6 설치 - Linux" - "x86_64 - Ubuntu - 22.04  
+까지 버전을 선택하면, nvidia 에서 공식 설치 명령어를 안내해준다.  
+`https://developer.nvidia.com/cuda-12-6-0-download-archive?target_os=Linux&target_arch=x86_64&Distribution=Ubuntu&target_version=22.04&target_type=deb_local`
+나는 아래와 같은 명령어를 소개 받았다.  
+```bash
+# Nvidia 에 나온 설치 방법
+# Base Installer
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-ubuntu2204.pin
+sudo mv cuda-ubuntu2204.pin /etc/apt/preferences.d/cuda-repository-pin-600
+wget https://developer.download.nvidia.com/compute/cuda/12.6.0/local_installers/cuda-repo-ubuntu2204-12-6-local_12.6.0-560.28.03-1_amd64.deb
+sudo dpkg -i cuda-repo-ubuntu2204-12-6-local_12.6.0-560.28.03-1_amd64.deb
+sudo cp /var/cuda-repo-ubuntu2204-12-6-local/cuda-*-keyring.gpg /usr/share/keyrings/
+sudo apt-get update
+sudo apt-get -y install cuda-toolkit-12-6
+# Driver Installer	
+NVIDIA Driver Instructions (choose one option)
+# To install the open kernel module flavor:
+sudo apt-get install -y nvidia-open
+# To install the legacy kernel module flavor:
+sudo apt-get install -y cuda-drivers
+```
+```bash
+# [실제 다운로드와, 명령어 설명]
+# 1. 먼저, 설치파일을 저장할 경로를 만들고, 해당 경로로 이동한 후 명령어 실행
+devbear@BOOK-MB2VJ96366:/mnt/c/Users/litl/PycharmProjects/gitProject/StudyDev/FY2025LLM$ cd /home/devbear/
+devbear@BOOK-MB2VJ96366:~$ mkdir ~/installers
+devbear@BOOK-MB2VJ96366:~/installers$
+# 위 경로에서 다운로드
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-ubuntu2204.pin
+# wget: 웹에서 파일을 다운로드 
+# .pin 파일은, NVIDIA가 제공하는 APT 우선순위 설정 파일
+
+# 결과 [SUCCESS]
+devbear@BOOK-MB2VJ96366:~/installers$ wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-ubuntu2204.pin
+--2025-07-13 15:54:56--  https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-ubuntu2204.pin
+Resolving developer.download.nvidia.com (developer.download.nvidia.com)... 23.59.252.163, 23.59.252.106
+Connecting to developer.download.nvidia.com (developer.download.nvidia.com)|23.59.252.163|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 190 [application/octet-stream]
+Saving to: ‘cuda-ubuntu2204.pin’
+
+cuda-ubuntu2204.pin              100%[========================================================>]     190  --.-KB/s    in 0s       
+
+2025-07-13 15:54:56 (36.2 MB/s) - ‘cuda-ubuntu2204.pin’ saved [190/190]
+
+
+# 2. 다운로드한 파일을 시스템 경로로 이동해주기.
+sudo mv cuda-ubuntu2204.pin /etc/apt/preferences.d/cuda-repository-pin-600
+# sudo : 루트 권한으로 실행 (시스템 디렉토리에 접근하기 때문에 필요)
+# mv   : 파일 이동
+# /etc/apt/preferences.d/ : APT 설정 파일들이 위치한 시스템 디렉토리
+# cuda-repository-pin-600 : 이동 후 바뀔 파일 이름 (설정 이름이므로 자유롭게 바꿔도 된다고 하나, 가이드를 그대로 따름)
+
+# 3. .deb 파일 다운로드 (CUDA 패키지를 설치할 수 있도록 하는 패키지 목록과 메타 정보가 포함되어 있는 파일)
+wget https://developer.download.nvidia.com/compute/cuda/12.6.0/local_installers/cuda-repo-ubuntu2204-12-6-local_12.6.0-560.28.03-1_amd64.deb
+
+# 결과 [SUCCESS]
+--2025-07-13 16:01:27--  https://developer.download.nvidia.com/compute/cuda/12.6.0/local_installers/cuda-repo-ubuntu2204-12-6-local_12.6.0-560.28.03-1_amd64.deb
+Resolving developer.download.nvidia.com (developer.download.nvidia.com)... 23.59.252.163, 23.59.252.106
+Connecting to developer.download.nvidia.com (developer.download.nvidia.com)|23.59.252.163|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 3355715790 (3.1G) [application/x-deb]
+Saving to: ‘cuda-repo-ubuntu2204-12-6-local_12.6.0-560.28.03-1_amd64.deb’
+
+cuda-repo-ubuntu2204-12-6-local_ 100%[========================================================>]   3.12G  10.7MB/s    in 5m 59s  
+
+2025-07-13 16:07:26 (8.92 MB/s) - ‘cuda-repo-ubuntu2204-12-6-local_12.6.0-560.28.03-1_amd64.deb’ saved [3355715790/3355715790] 
+
+# 4. CUDA를 설치할 수 있게 해주는 "로컬 저장소(repository)" 정보를 시스템에 등록
+sudo dpkg -i cuda-repo-ubuntu2204-12-6-local_12.6.0-560.28.03-1_amd64.deb
+# dpkg : Debian 기반의 (Ubuntu 포함) 시스템에서 .deb 패키지를 설치,제거,정보를 확인하는 로우레벨 패키지 관리 도구
+# -i   : install 약어, 설치하겠다. 
+
+# 결과 [SUCCESS]
+devbear@BOOK-MB2VJ96366:~/installers$ sudo dpkg -i cuda-repo-ubuntu2204-12-6-local_12.6.0-560.28.03-1_amd64.deb
+Selecting previously unselected package cuda-repo-ubuntu2204-12-6-local.
+(Reading database ... 33995 files and directories currently installed.)
+Preparing to unpack cuda-repo-ubuntu2204-12-6-local_12.6.0-560.28.03-1_amd64.deb ...
+Unpacking cuda-repo-ubuntu2204-12-6-local (12.6.0-560.28.03-1) ...
+Setting up cuda-repo-ubuntu2204-12-6-local (12.6.0-560.28.03-1) ...
+
+The public cuda-repo-ubuntu2204-12-6-local GPG key does not appear to be installed.
+To install the key, run this command:
+sudo cp /var/cuda-repo-ubuntu2204-12-6-local/cuda-3DBA81E7-keyring.gpg /usr/share/keyrings/
+# cuda-keyring.gpg 사이에 문자열이 나왔다. 해당 명령어를 복사하여 설치한다.
+
+# 5. CUDA 저장소의 GPG 키 파일을 시스템의 신뢰 디렉토리로 복사. (APT가 이 저장소를 신뢰하게 함)
+sudo cp /var/cuda-repo-ubuntu2204-12-6-local/cuda-3DBA81E7-keyring.gpg /usr/share/keyrings/
+
+# 6. 
+sudo apt-get update
+# 결과 [SUCCESS]
+devbear@BOOK-MB2VJ96366:~/installers$ sudo apt-get update
+Get:1 file:/var/cuda-repo-ubuntu2204-12-6-local  InRelease [1572 B]
+Get:1 file:/var/cuda-repo-ubuntu2204-12-6-local  InRelease [1572 B]
+Get:2 file:/var/cuda-repo-ubuntu2204-12-6-local  Packages [42.0 kB]
+Hit:3 http://archive.ubuntu.com/ubuntu jammy InRelease
+Hit:4 http://security.ubuntu.com/ubuntu jammy-security InRelease
+Hit:5 http://archive.ubuntu.com/ubuntu jammy-updates InRelease
+Hit:6 http://archive.ubuntu.com/ubuntu jammy-backports InRelease
+Hit:7 https://ppa.launchpadcontent.net/deadsnakes/ppa/ubuntu jammy InRelease
+Reading package lists... Done
+
+# 7. 마지막! CUDA Toolkit 설치!
+sudo apt-get -y install cuda-toolkit-12-6
+
+# 8. 환경변수 확인하고, 없으면 등록하기
+# 8-1. 확인
+echo $PATH
+echo $LD_LIBRARY_PATH
+# 8-2. 등록
+echo 'export PATH=/usr/local/cuda-12.6/bin:$PATH' >> ~/.bashrc
+echo 'export LD_LIBRARY_PATH=/usr/local/cuda-12.6/lib64:$LD_LIBRARY_PATH' >> ~/.bashrc
+source ~/.bashrc
+# export PATH=/usr/local/cuda-12.6/bin:$PATH : CUDA 실행파일 경로를 시스템에 등록
+# LD_LIBRARY_PATH=/usr/local/cuda-12.6/lib64:$LD_LIBRARY_PATH :	CUDA 라이브러리 경로 등록
+# source : 현재 셸에 설정 파일 내용을 즉시 적용
+# ~/.bashrc : 현재 사용자 계정의 셸 설정 파일
+# 8-3. 최종 설치 확인!
+nvcc --version
+# 결과 [SUCCESS]
+devbear@BOOK-MB2VJ96366:~/installers$ nvcc --version
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2024 NVIDIA Corporation
+Built on Fri_Jun_14_16:34:21_PDT_2024
+Cuda compilation tools, release 12.6, V12.6.20
+Build cuda_12.6.r12.6/compiler.34431801_0
+
+devbear@BOOK-MB2VJ96366:~/installers$ which nvcc
+/usr/local/cuda-12.6/bin/nvcc
+```
+
+```bash
+# [참고] 내 우분투 버전 확인하기
+#devbear@BOOK-MB2VJ96366:/mnt/c/Users/litl/PycharmProjects/gitProject/StudyDev/FY2025LLM$ 
+lsb_release -a
+
+# 결과
+No LSB modules are available.
+Distributor ID: Ubuntu
+Description:    Ubuntu 22.04.3 LTS
+Release:        22.04
+Codename:       jammy
+```
+#### cuDNN for CUDA 12.6 설치
+링크 : `https://developer.nvidia.com/rdp/cudnn-archive`
+cuDNN v8.9.7 CUDA 12.x -  Local Installer for Linux x86_64 (Tar) 다운로드  
+위 버튼을 클릭하자 이번엔, 명령어가 아닌 로컬 PC 로 TAR 파일이 다운로드 되었다.  
+
+```bash
+# 1. 윈도우 환경 내 파일을 WSL 내부로 복사
+cp /mnt/c/Users/litl/Downloads/cudnn-linux-x86_64-8.9.7.29_cuda12-archive.tar.xz /home/devbear/installers/
+
+# 2. 압축 파일 해제
+tar -xvf cudnn-linux-x86_64-8.9.7.29_cuda12-archive.tar.xz
+# 해당 폴더로 이동
+cd cudnn-linux-x86_64-8.9.7.29_cuda12-archive
+# 목록 확인
+devbear@BOOK-MB2VJ96366:~/installers/cudnn-linux-x86_64-8.9.7.29_cuda12-archive$ ls
+LICENSE  include  lib
+# 복사
+sudo cp include/* /usr/local/cuda/include/
+sudo cp lib/* /usr/local/cuda/lib64/
+# 라이브러리 캐시 갱신
+sudo ldconfig
+# 설치 되었는지 파일 확인
+ls /usr/local/cuda/include/cudnn*.h
+ls /usr/local/cuda/lib64/libcudnn*
+```
+#### TensorRT for CUDA 12.6 설치
+링크: `https://developer.nvidia.com/tensorrt/download`
+TensorRT 10.10 GA for Ubuntu 22.04 and CUDA 12.0 to 12.9 DEB local repo Package  
+위 버전을 다운받는다.
