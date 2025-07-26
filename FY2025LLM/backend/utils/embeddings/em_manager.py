@@ -1,4 +1,4 @@
-from utils.embeddings.embedder import Embedder
+from backend.utils.embeddings.embedder import Embedder
 from typing import List, Dict
 
 class EmManager:

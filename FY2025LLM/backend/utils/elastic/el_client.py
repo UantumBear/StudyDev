@@ -1,7 +1,11 @@
+"""
+@경로 utils/elastic/el_client.py
+@역할 ElClient :: 엘라스틱 서치의 사용자 함수들을 작성할 클래스
+"""
+
+
 from elasticsearch import Elasticsearch
 from typing import Optional
-
-""" 엘라스틱 서치의 사용자 함수들을 작성할 클래스 """
 
 class ElClient:
     def __init__(self, hosts: str, basic_auth: tuple, verify_certs: bool = True):

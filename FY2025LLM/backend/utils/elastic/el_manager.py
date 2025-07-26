@@ -1,6 +1,8 @@
-# app/elastic/el_manager.py
-# from elasticsearch import Elasticsearch
-from utils.elastic.el_client import ElClient
+"""
+@경로 utils/elastic/el_manager.py
+@역할 FastAPI 에서 Depends 로 사용하기 위한 manager 클래스
+"""
+from backend.utils.elastic.el_client import ElClient
 from config import conf
 
 class ElManager:

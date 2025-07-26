@@ -1,3 +1,8 @@
+"""
+@경로 utils.embeddings.model_downloader.py
+@역할 임베딩 모델 다운로드
+"""
+
 from sentence_transformers import SentenceTransformer
 
 model_name = "BM-K/KoSimCSE-roberta"
