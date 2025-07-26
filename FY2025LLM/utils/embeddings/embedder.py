@@ -60,4 +60,5 @@ if __name__ == "__main__":
         print("Embedding:", item["embedding"][:5], "...")  # 벡터 일부만 출력
         print()
 
+# $env:PYTHONPATH = (Get-Location).Path
 # python utils/embeddings/embedder.py
