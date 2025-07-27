@@ -1,3 +1,5 @@
+# frontend/Dockerfile
+
 # 1. Node.js base image 사용
 FROM node:20
 

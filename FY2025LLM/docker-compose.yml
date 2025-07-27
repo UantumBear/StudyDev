@@ -1,0 +1,54 @@
+# docker-compose.yml
+
+version: "3.8"
+# Docker Compose 파일의 스펙 버전
+
+services:  # services: 컨테이너를 정의
+  backend:  # backend 서비스
+    build:
+      context: ./backend  # ./backend 폴더를 빌드 컨텍스트로 사용
+      dockerfile: Dockerfile  # dockerfile: backend 폴더 내 Dockerfile을 사용해 이미지를 빌드
+    container_name: fastapi-app
+    ports:
+      - "8000:8000"  # 호스트의 8000 포트를 컨테이너의 8000 포트에 매핑
+    volumes:
+      - ./backend:/FY2025LLM/backend
+      # 호스트의 ./backend 폴더를 컨테이너의 /FY2025LLM/backend에 마운트
+      # 로컬에서 코드를 수정하면 컨테이너 안에서도 변경
+    depends_on:
+      - elasticsearch  # backend는 elasticsearch가 먼저 시작된 이후에 시작
+    runtime: nvidia  # 해당 컨테이너가 GPU를 사용할 수 있도록 NVIDIA 런타임을 사용
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: react-app
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/FY2025LLM/frontend
+      # 로컬의 frontend 디렉토리를 컨테이너 내 /FY2025LLM/frontend에 마운트
+    stdin_open: true  # 터미널에서 입력(stdin) 가능하게 함
+    tty: true  # 가상 터미널 할당 (콘솔 출력 보기 등 개발 시 디버깅용)
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.14.1
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node    # 클러스터가 아닌 단일 노드 모드로 실행
+      - xpack.security.enabled=false  #  보안 인증(사용자/비밀번호) 비활성화, 개발 환경
+    ports:
+      - "9200:9200"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+      # 도커 볼륨 esdata를 데이터 저장소로 사용하여 데이터 지속성 보장
+
+volumes:
+  esdata:
+  # esdata라는 이름의 도커 볼륨을 정의
+  # elasticsearch의 /usr/share/elasticsearch/data에 마운트되어, 컨테이너를 지우더라도 데이터가 유지
+
+
+# docker-compose up --build
+# docker-compose --compatibility up --build
