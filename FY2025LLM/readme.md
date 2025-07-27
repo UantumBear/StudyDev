@@ -1,6 +1,25 @@
 ## FY2025LLM
 
 2025년 llm을 공부하는 경로
+
+## Project Info
+
+| 구분            | 기술 스택                             |
+|-----------------|----------------------------------------|
+| **Frontend**    | React, React Router, CSS  |
+| **Backend**     | FastAPI, Uvicorn                       |
+
+
+<br>
+
+---
+
+<br>
+<br>
+<br>
+<br>
+
+
 ```bash
 echo "# Generated on $(Get-Date -Format 'yyyy-MM-dd')" > requirements.txt; pip freeze >> requirements_loc_windows_venv312.txt
 ```
@@ -335,3 +354,4 @@ ntime::ProviderLibrary::Get [ONNXRuntimeError] : 1 : FAIL : Error loading "C:\Us
 ```
 
 ##### TensorRT SDK 다운로드
+https://developer.nvidia.com/tensorrt/download/10x
