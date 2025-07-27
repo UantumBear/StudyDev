@@ -1,0 +1,99 @@
+/* MainPage.css */
+
+@font-face {
+    font-family: 'PFStardustS';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2506-1@1.0/PFStardustS.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'PFStardust';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/PFStardust.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'LanaPixel';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2506-1@1.0/LanaPixel.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'exqt';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2506-1@1.0/exqt.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Ycomputer-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/Ycomputer-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+     font-family: 'DungGeunMo';
+     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff') format('woff');
+     font-weight: normal;
+     font-style: normal;
+}
+
+/* 전체 페이지에 글꼴 적용 */
+body, button, input, select, textarea {
+  font-family: 'exqt', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fff0f5; /* 예쁜 파스텔 배경 */
+}
+
+.main-container {
+  width: 100vw;
+  height: 100vh;
+  background-image: url('../assets/background0006.png');
+  background-size: cover;         /* 또는 contain / auto */
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffeef8; /* 파스텔 핑크 배경 */
+}
+
+.title {
+  font-size: 20px;
+  background-color: rgba(255, 255, 255, 0.05);
+  /* backdrop-filter: blur(2px); */
+  color: #00a6c8;
+  /* color: #ff69b4;*/ /* 핫핑크 */
+  /* color: #263c61;*/ /* 남색 */
+  margin-bottom: 40px;
+  text-shadow: 2px 2px #fff0f5; /* 부드러운 그림자 */
+}
+
+.button-container {
+  display: flex;
+  gap: 20px;
+}
+
+.pixel-button {
+  font-size: 14px;
+  padding: 10px 20px;
+  margin: 0 10px;
+
+  background-color: rgba(255, 255, 255, 0.3); /* 투명한 흰색 */
+  color: #443c63; /* 부드러운 연보라색 계열 */
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  transition: all 0.25s ease-in-out;
+  cursor: pointer;
+}
+
+.pixel-button:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
