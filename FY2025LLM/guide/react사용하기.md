@@ -1,3 +1,5 @@
+### 프로젝트 셋팅 방법
+
 #### Node.js와 npm 설치
 https://nodejs.org/ko 에서 LTS 버전 다운로드  
 Windows 64-bit Installer: https://nodejs.org/dist/v22.17.1/node-v22.17.1-x64.msi  
@@ -36,6 +38,7 @@ cd frontend
 npm install
 npm install react-router-dom
 npm run dev
+# npm run dev 란, package.json의 "scripts" 항목에서 "dev" 키에 등록된 명령을 실행하는 것
 ```
 
 
