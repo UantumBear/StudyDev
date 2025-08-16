@@ -11,7 +11,7 @@ function MainPage() {
     <div className="main-container">
       <div className="title">UantumBear's Projects</div>
       <div className="button-container">
-        <button className="pixel-button" onClick={() => navigate('/devbear')}> Not built</button>
+        <button className="pixel-button" onClick={() => navigate('/devbear')}>개발곰 챗봇</button>
         <button className="pixel-button" onClick={() => navigate('/hr')}> HR Chatbot Entry</button>
       </div>
     </div>
