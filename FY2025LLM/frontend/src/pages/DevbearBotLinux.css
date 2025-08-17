@@ -1,0 +1,158 @@
+/* frontend/src/pages/DevbearBotLinux.css */
+@font-face {
+    font-family: 'NeoDunggeunmoPro-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/NeoDunggeunmoPro-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'PFStardust';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/PFStardust.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@import url('https://fastly.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css');
+/* 전역 리셋: 꼭 파일 맨 위쪽] */
+html, body, #root { height: 100%; }
+body { margin: 0; }
+
+
+.linux-line {
+    /* font-family: 'Galmuri14', sans-serif; */
+    /* Press Start 2P */
+    font-family: 'galmuri9', sans-serif;
+    font-size : 16px;
+    font-weight:400;
+}
+
+
+/* 레트로 CRT 스타일 */
+.linux-root {
+  min-height: 100vh;
+  background: #000;
+  color: #00ff66;
+
+  /* ↓ 가운데 정렬/여백 제거 */
+  display: block;
+  padding: 0;
+
+  font-size: 20px;
+  line-height: 1.6;
+}
+
+.linux-terminal {
+  position: fixed;
+  top: 32px;                     /* 타이틀바 높이 */
+  left: 0; right: 0; bottom: 0;  /* 남은 화면 전체 */
+  overflow-y: auto;
+  padding: 18px 20px;
+  box-sizing: border-box;
+  background: #000;
+
+  /* 기존 width/max-width/height/border/box-shadow 제거됨 */
+}
+
+/* 메시지 줄 */
+.linux-line {
+  white-space: pre-wrap;
+  word-break: break-word;  /* ★ 줄바꿈 보강 */
+  margin: 4px 0;
+}
+
+/* 사용자 입력/메시지 오른쪽 정렬 */
+.linux-line.right {
+  text-align: right;
+  color: #b1b1b1;
+}
+
+/* 봇 메시지 왼쪽 정렬 */
+.linux-line.left {
+  text-align: left;
+  color: #00ff66;
+}
+
+/* 커서 */
+.linux-cursor {
+  display: inline-block;
+  margin-left: 2px;
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* 스크롤바 (크롬용) */
+.linux-terminal::-webkit-scrollbar {
+  width: 10px;
+}
+.linux-terminal::-webkit-scrollbar-thumb {
+  background: rgba(0,255,102,0.4);
+}
+
+.linux-inline-input {
+  display: inline-block;
+  max-width: 90vw;            /* ★ 창 줄여도 안 잘리게 */
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #b1b1b1;             /* 오른쪽(사용자) 컬러와 맞춤 */
+  font: inherit;
+  text-align: right;
+  caret-color: transparent; /* 기본 캐럿 숨기기 */
+}
+
+
+/* ── 타이틀바: 윈도우 느낌(심플 회색), 버튼 없음 ── */
+.linux-titlebar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 32px;
+  background: #d0d0d0;          /* 플랫 회색 */
+  border-bottom: 1px solid #bcbcbc;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  box-sizing: border-box;
+  z-index: 10;                   /* 항상 맨 위 */
+}
+.linux-title {
+  font-size: 13px;
+  color: #000;
+  font-weight: 600;
+  user-select: none;
+}
+
+/* 흐린 상태 메시지 */
+.linux-line.status {
+  color: #747373;   /* 기존 형광녹색보다 톤 다운 */
+  opacity: 0.6;
+  /* font-style: italic; */
+}
+
+/* 곰을 넣는 고정 슬롯: 줄 높이 변화 방지 */
+.bear-slot {
+  display: inline-block;
+  width: 1.4em;      /* 텍스트 라인 높이 기준으로 적당히 조정 */
+  height: 1.4em;
+  margin-left: 8px;
+  /* vertical-align: middle; */
+}
+
+/* 슬롯 안의 캔버스는 슬롯 크기에 맞춰 리사이즈 (픽셀렝더링 유지) */
+.bear-slot canvas {
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* 상태 줄이 캔버스 높이에서 영향받지 않도록 줄맞춤 강화 (선택) */
+.linux-line.status {
+  line-height: 1.6;      /* 기존 값 유지 */
+  /* 필요 시 다음도 고려:
+  display: inline-flex;
+  align-items: center;
+  */
+}
+
