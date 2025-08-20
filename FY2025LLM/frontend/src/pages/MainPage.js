@@ -23,8 +23,8 @@ function MainPage() { // 이 파일이 정의하는 컴포넌트
           onClick={() => window.location.href = "http://www.devbearbot.xyz/resume/"}
         >RESUME
         </button>
-        {/* LLM 개발곰 챗봇 */}
-        <button className="pixel-button" onClick={() => navigate('/devbearBotLinux')}>개발곰 LLM</button>
+        {/* LLM 개발곰 챗봇 → 게이트 경유 */}
+        <button className="pixel-button" onClick={() => navigate('/gate/devbear')}>개발곰 LLM</button>
         {/* HR 챗봇 */}
         <button className="pixel-button" onClick={() => navigate('/hr')}> HR Chatbot Entry</button>
 
