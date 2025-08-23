@@ -37,6 +37,7 @@ cd frontend
 # frontend 경로에서 아래 명령어 수행
 npm install
 npm install react-router-dom
+npm install axios
 npm run dev
 # npm run dev 란, package.json의 "scripts" 항목에서 "dev" 키에 등록된 명령을 실행하는 것
 ```
