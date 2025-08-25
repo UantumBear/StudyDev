@@ -1,8 +1,5 @@
 # FY2025LLM/backend/utils/llm/services/devbear/dev_bear.py
 from typing import List, Optional, Generator
-from backend.utils.llm.core.types import Message
-from backend.utils.azure.azure_gpt_client import AzureGPTClient
-from backend.utils.llm.prompts.base_prompt import BasePrompt
 from backend.utils.llm.prompts.devbear.devbear_prompt import DevBearPrompt
 from backend.utils.llm.services.llm_service_base import LLMServiceBase
 from backend.utils.llm.prompts.text_filters import strip_emojis
