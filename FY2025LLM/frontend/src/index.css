@@ -1,0 +1,35 @@
+/* 
+@경로: FY2025LLM/frontend/src/index.css
+@역할: 전역 설정
+*/
+
+
+/* 01. HR 테마 */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600&display=swap');
+
+body.hr-theme {
+  --hr-primary: #005ba1;        /* HR 포인트 컬러 변수 */
+  font-family: 'Noto Sans KR', 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* HR 공통 컴포넌트에서 색 변수 활용(선택) */
+body.hr-theme .hrgate-button,
+body.hr-theme .hrbot-header,
+body.hr-theme .hrbot-send {
+  background: var(--hr-primary);
+  color: #fff;
+}
+
+/* 02. DEV BEAR 테마 */
+@font-face {
+    font-family: 'exqt';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2506-1@1.0/exqt.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 기본적으로 DevBear 전체는 exqt */
+body.devbear-theme .devbear-root {
+  font-family: 'exqt', sans-serif;
+}

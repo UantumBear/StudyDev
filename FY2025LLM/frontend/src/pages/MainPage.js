@@ -1,4 +1,5 @@
-// frontend/src/pages/MainPage.js
+// @경로 FY2025LLM/frontend/src/pages/MainPage.js
+
 import React from 'react'; //JSX 문법을 쓰기 위함
 import './MainPage.css';
 import { useNavigate } from 'react-router-dom'; // 훅(hook). 버튼 클릭 시 다른 페이지로 이동
@@ -25,8 +26,15 @@ function MainPage() { // 이 파일이 정의하는 컴포넌트
         </button>
         {/* LLM 개발곰 챗봇 → 게이트 경유 */}
         <button className="pixel-button" onClick={() => navigate('/gate/devbear')}>개발곰 LLM</button>
-        {/* HR 챗봇 */}
-        <button className="pixel-button" onClick={() => navigate('/hr')}> HR Chatbot Entry</button>
+
+        {/* 내부: HR 챗봇 → 게이트 경유 */}
+        <button
+          className="pixel-button"
+          aria-label="HR Chatbot Entry"
+          onClick={() => navigate('/gate/hr')}
+        >
+          HR Chatbot Entry
+        </button>
 
       </div>
     </div>

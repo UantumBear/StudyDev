@@ -41,7 +41,7 @@ function DevbearGatePage() {
   };
 
   return (
-    <div className="main-container gate-center">
+    <div className="devbear-root main-container gate-center">
       <div className="gate-card">
         <h2 className="gate-title">접근 안내</h2>
         <p className="gate-desc">

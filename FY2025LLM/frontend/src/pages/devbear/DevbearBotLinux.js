@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import "./DevbearBotLinux.css";
-import BearRunner from "../components/BearRunner";
+import BearRunner from "../../components/BearRunner";
 
 const API_BASE = "http://localhost:8000"; // FastAPI 서버 주소 TODO 서버 올릴 때에는 수정
 
@@ -201,7 +201,7 @@ export default function DevbearBotLinux() {
   }, []);
 
   return (
-    <div className="linux-root">
+    <div className="devbear-root linux-root">
       <div className="linux-titlebar">
         <div className="linux-title">DEVBEAR LLM CHATBOT</div>
       </div>

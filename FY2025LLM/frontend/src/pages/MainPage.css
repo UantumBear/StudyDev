@@ -8,126 +8,131 @@
   font-display: swap;
 }
 /* 손글씨 풍 */
-@font-face {
+/* @font-face {
     font-family: 'SacheonUju-Regular';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2506-1@1.0/SacheonUju-Regular.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
-}
-@font-face {
+} */
+/* @font-face {
     font-family: 'PeoplefirstILTTF';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2501-1@1.1/PeoplefirstILTTF.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
-}
-@font-face {
+} */
+/* @font-face {
     font-family: 'Ownglyph_ParkDaHyun';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2411-3@1.0/Ownglyph_ParkDaHyun.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
-}
-@font-face {
+} */
+/* @font-face {
     font-family: 'Ownglyph_jooreeletter-Rg';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-2@1.0/Ownglyph_jooreeletter-Rg.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
-}
+} */
 
 
 /* 레트로 픽셀 풍 */
-@font-face {
+/* @font-face {
     font-family: 'PFStardustS';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2506-1@1.0/PFStardustS.woff2') format('woff2');
     font-weight: 400;
     font-style: normal;
-}
-@font-face {
+} */
+/* @font-face {
     font-family: 'PFStardustExtraBold';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2506-1@1.0/PFStardustExtraBold.woff2') format('woff2');
     font-weight: 800;
     font-style: normal;
-}
-@font-face {
+} */
+/* @font-face {
     font-family: 'PFStardust';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/PFStardust.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-}
-
-@font-face {
+} */
+/* @font-face {
     font-family: 'Ramche';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/Ramche.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
-}
-
-@font-face {
+} */
+/* @font-face {
     font-family: 'LanaPixel';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2506-1@1.0/LanaPixel.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
-}
-@font-face {
-    font-family: 'exqt';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2506-1@1.0/exqt.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'Ycomputer-Regular';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/Ycomputer-Regular.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-     font-family: 'DungGeunMo';
-     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff') format('woff');
-     font-weight: normal;
-     font-style: normal;
-}
-@font-face {
-    font-family: 'BoldDungGeunMo';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2507-2@1.0/BoldDungGeunMo.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
+} */
+
+/* @font-face {
     font-family: 'NeoDunggeunmoPro-Regular';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/NeoDunggeunmoPro-Regular.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
-}
+} */
+/* @font-face {
+    font-family: 'PFStardust';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/PFStardust.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+} */
+/* @font-face {
+    font-family: 'Ycomputer-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/Ycomputer-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+} */
+/* @font-face {
+     font-family: 'DungGeunMo';
+     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff') format('woff');
+     font-weight: normal;
+     font-style: normal;
+} */
+/* @font-face {
+    font-family: 'BoldDungGeunMo';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2507-2@1.0/BoldDungGeunMo.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+} */
+/* @font-face {
+    font-family: 'NeoDunggeunmoPro-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/NeoDunggeunmoPro-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+} */
 
-@font-face {
+/* @font-face {
     font-family: 'DOSIyagiMedium';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/DOSIyagiMedium.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
-}
-@font-face {
+} */
+/* @font-face {
     font-family: 'DOSGothic';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_eight@1.0/DOSGothic.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-}
-@font-face {
+} */
+/* @font-face {
     font-family: 'dalmoori';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2102-01@1.0/dalmoori.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-}
-@font-face {
+} */
+/* @font-face {
     font-family: 'Galmuri14';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2506-1@1.0/Galmuri14.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
-}
-@font-face {
+} */
+/* @font-face {
     font-family: 'Galmuri11-Condensed';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2506-1@1.0/Galmuri11-Condensed.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
-}
+} */
 
 /* 전체 페이지에 글꼴 적용 */
 body, button, input, select, textarea {

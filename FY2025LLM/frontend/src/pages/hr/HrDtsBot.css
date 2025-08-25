@@ -1,0 +1,74 @@
+/* @경로 FY2025LLM/frontend/src/pages/hr/HrDtsBot.css */
+
+.hrbot-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #f9fbfd;
+}
+
+.hrbot-header {
+  background: #005ba1;
+  color: #fff;
+  padding: 15px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.hrbot-messages {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.hrbot-msg {
+  max-width: 70%;
+  padding: 10px 14px;
+  margin: 8px 0;
+  border-radius: 12px;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.hrbot-msg.bot {
+  background: #e8f3fb;
+  color: #333;
+  align-self: flex-start;
+}
+
+.hrbot-msg.me {
+  background: #005ba1;
+  color: #fff;
+  align-self: flex-end;
+}
+
+.hrbot-input-area {
+  display: flex;
+  padding: 12px;
+  border-top: 1px solid #ddd;
+  background: #fff;
+}
+
+.hrbot-input {
+  flex: 1;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.hrbot-send {
+  background: #005ba1;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0 20px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.hrbot-send:hover {
+  background: #004880;
+}

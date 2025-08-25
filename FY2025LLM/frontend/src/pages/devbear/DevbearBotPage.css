@@ -1,44 +1,43 @@
 /* frontend/src/pages/DevbearBotPage.css */
-@font-face {
-    font-family: 'exqt'; /* 귀엽지만 작고 굵어서 chat 용으로는 부적합 */
+/* @font-face {
+    font-family: 'exqt'; 
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2506-1@1.0/exqt.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
-}
-@font-face {
+} */
+/* @font-face {
     font-family: 'PFStardustS';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2506-1@1.0/PFStardustS.woff2') format('woff2');
     font-weight: 400;
     font-style: normal;
-}
-@font-face {
+} */
+/* @font-face {
     font-family: 'PFStardustExtraBold';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2506-1@1.0/PFStardustExtraBold.woff2') format('woff2');
     font-weight: 800;
     font-style: normal;
-}
-@font-face {
+} */
+/* @font-face {
     font-family: 'Ycomputer-Regular';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/Ycomputer-Regular.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
-}
-@font-face {
-    /* 얇은 글씨체 레트로 풍 폰트 */
+} */
+/* @font-face {
     font-family: 'Galmuri14';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2506-1@1.0/Galmuri14.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
-}
-@font-face {
+} */
+/* @font-face {
      font-family: 'DungGeunMo';
      src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff') format('woff');
      font-weight: normal;
      font-style: normal;
-}
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+} */
+/* @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Jersey+25+Charted&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap'); /* 일본어 글자 예뻐서 가져옴 */
+@import url('https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap');  */
 
 
 /* 페이지 루트: 몽글한 하늘 + 별 */

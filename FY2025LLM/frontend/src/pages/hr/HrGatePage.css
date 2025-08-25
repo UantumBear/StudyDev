@@ -1,0 +1,44 @@
+/* @경로 FY2025LLM/frontend/src/pages/hr/HrGatePage.css */
+
+.hrgate-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #f6f8fa;
+}
+
+.hrgate-card {
+  background: #fff;
+  padding: 40px 50px;
+  border-radius: 16px;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+.hrgate-title {
+  font-size: 28px;
+  color: #005ba1;
+  margin-bottom: 12px;
+}
+
+.hrgate-subtitle {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.hrgate-button {
+  background: #005ba1;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.hrgate-button:hover {
+  background: #004880;
+}
