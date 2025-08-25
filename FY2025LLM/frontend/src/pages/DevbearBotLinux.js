@@ -1,13 +1,15 @@
 // frontend/src/pages/DevbearBotLinux.jsx
 import React, { useEffect, useRef, useState } from "react";
+import axios from "axios";
 import "./DevbearBotLinux.css";
 import BearRunner from "../components/BearRunner";
 
+const API_BASE = "http://localhost:8000"; // FastAPI 서버 주소 TODO 서버 올릴 때에는 수정
 
-/* 타자 속도(원하시면 숫자만 바꾸세요) */
-const STATUS_TYPE_SPEED_MS   = 200; // "… 달려오고 있습니다 …" 한 글자 간격
-const GREETING_TYPE_SPEED_MS = 80;  // "안녕하세요..! 제가 왔어요!" 한 글자 간격
-const REPLY_TYPE_SPEED_MS    = 80;  // "응답입니다." 한 글자 간격
+/* 타자 속도 */
+const STATUS_TYPE_SPEED_MS   = 140; // "… 달려오고 있습니다 …" 한 글자 간격
+const GREETING_TYPE_SPEED_MS = 70;  // "안녕하세요..! 제가 왔어요!" 한 글자 간격
+const REPLY_TYPE_SPEED_MS    = 70;  // "응답입니다." 한 글자 간격
 
 const GREETING_TEXT = "\n안녕하세요..! 제가 왔어요!";
 const QUICK_REPLY   = "응답입니다.";
@@ -100,7 +102,7 @@ export default function DevbearBotLinux() {
 
   };
 
-  /* 2) 이후 매번: 간단한 “응답입니다.” 타자 */
+  /* 2) 이후 매번: 간단한 “응답입니다.” 하드코딩 타자 */
   const startQuickReply = () => {
     setIsTyping(true);
     let k = 0;
@@ -128,6 +130,51 @@ export default function DevbearBotLinux() {
       }
     }, REPLY_TYPE_SPEED_MS);
   };
+  /* 진짜 API 응답 타자 */
+  /* 2) 이후 매번: API 응답을 받아 채팅창에 추가 */
+  const startApiReply = async (userText) => {
+    setIsTyping(true);
+
+    try {
+      const resp = await axios.post(`${API_BASE}/services/devbear/ask`, {
+        prompt: userText,
+      });
+      const reply = resp.data.reply || "(응답 없음)";
+
+      // 타자 효과
+      let k = 0;
+      setMessages(prev => [...prev, { role: "botTyping", text: "" }]);
+      typingTimerRef.current = setInterval(() => {
+        k++;
+        setMessages(prev => {
+          const list = [...prev];
+          const last = list[list.length - 1];
+          if (!last || last.role !== "botTyping") return prev;
+          last.text = reply.slice(0, k);
+          return list;
+        });
+        scrollToBottom();
+
+        if (k >= reply.length) {
+          clearInterval(typingTimerRef.current);
+          typingTimerRef.current = null;
+          setMessages(prev => {
+            const list = [...prev];
+            list[list.length - 1] = { role: "bot", text: reply };
+            return list;
+          });
+          setIsTyping(false);
+        }
+      }, REPLY_TYPE_SPEED_MS);
+    } catch (err) {
+      console.error(err);
+      setMessages(prev => [
+        ...prev,
+        { role: "bot", text: "오류가 발생했어요. 서버를 확인해주세요!" },
+      ]);
+      setIsTyping(false);
+    }
+  };
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -142,7 +189,8 @@ export default function DevbearBotLinux() {
       setCurrentInput("");
 
       if (!hasArrived) startArrivalSequence();   // ★ 처음 1회만
-      else startQuickReply();                    // ★ 이후에는 빠른 응답
+      else startApiReply(text);  
+      //else startQuickReply();                    // ★ 이후에는 빠른 응답
 
       scrollToBottom();
     }

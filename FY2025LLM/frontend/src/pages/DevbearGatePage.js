@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './DevbearGatePage.css'; // ★ CSS 분리
 const API_BASE = process.env.REACT_APP_API_BASE;
+// CRA(Create React App)나 Vite 같은 빌드 도구는 process.env.REACT_APP_ 형태의 환경 변수를 빌드 시점에 JS 코드 안에 주입한다.
+// 즉, npm start나 npm run build를 실행할 때, OS 환경 변수나 .env 파일에 정의된 값이 들어가는 것
 
 function DevbearGatePage() {
   const navigate = useNavigate();
@@ -58,6 +60,7 @@ function DevbearGatePage() {
             autoFocus
           />
           {err && <div className="gate-error">{err}</div>}
+          {/* error mesage 렌더링 */}
           <button
             type="submit"
             className="pixel-button gate-submit"
