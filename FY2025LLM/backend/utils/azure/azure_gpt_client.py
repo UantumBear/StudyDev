@@ -102,7 +102,7 @@ class AzureGPTClient:
     def stream_chat(
         self,
         messages: List[Message],
-        temperature: float = 0.2,
+        temperature: float = 0.18,
         max_tokens: Optional[int] = None,
         **extra,
     ) -> Generator[str, None, None]:
