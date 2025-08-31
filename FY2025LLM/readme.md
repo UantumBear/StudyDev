@@ -24,6 +24,9 @@
 ###### 개발곰 LLM 페이지 (서버에 반영하지 않았음)
 ![FY2025LLM_DEVBEAR_LINUX](data/git/devbear_linux_page_250831.png)
 
+###### 귀여워서 캡처한 카카오 디벨로퍼스 페이지..
+![KAKAO_DEVELOPERS_DEVBEAR](data/git/kakao_developers_devbear_250831.png)
+
 <br>
 --- 
 
