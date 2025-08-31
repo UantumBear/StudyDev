@@ -14,6 +14,7 @@ from backend.routers.health import HEALTH
 from backend.routers.elastic.elas import ELAS
 from backend.routers.chat.chat001 import CHAT001
 from backend.routers.services.devbear.llm01 import LLM01
+from backend.routers.kakao.auth import KAKAOAUTH
 
 # utils
 from backend.utils.elastic.el_server_run import start_elasticsearch_server
@@ -44,7 +45,8 @@ router_list = [
     HEALTH,
     ELAS,
     CHAT001,
-    LLM01
+    LLM01,
+    KAKAOAUTH
 ]
 # 라우터 일괄 등록
 for router in router_list:
