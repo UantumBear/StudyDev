@@ -1,6 +1,6 @@
 ## FY2025LLM
+2025년, llm을 공부하기 위해 토이 웹을 만들어보고 있습니다.  
 
-2025년 llm을 공부하는 경로
 
 ## Project Info
 
@@ -10,8 +10,24 @@
 | **Backend**     | FastAPI, Uvicorn                       |
 
 
-<br>
+## Project Screenshot
 
+###### FY2025LLM 메인페이지 (서버에 반영하지 않았음)
+![FY2025LLM_메인페이지](data/git/mainpage_250831.png)
+
+##### BERT Practice 페이지 [www.devbearbot.xyz/chat2](www.devbearbot.xyz/chat2)  
+![BERT_Practice](data/git/devbear_bert_250831.png)
+
+##### RESUME 페이지 [www.devbearbot.xyz/resume](www.devbearbot.xyz/resume)  
+![RESUME](data/git/resume_250831.png)
+
+###### 개발곰 LLM 페이지 (서버에 반영하지 않았음)
+![FY2025LLM_DEVBEAR_LINUX](data/git/devbear_linux_page_250831.png)
+
+<br>
+--- 
+
+<br>
 ---
 
 <br>
@@ -20,17 +36,22 @@
 <br>
 
 
+---
+
+## Study
+
 ```bash
 echo "# Generated on $(Get-Date -Format 'yyyy-MM-dd')" > requirements.txt; pip freeze >> requirements_loc_windows_venv312.txt
 ```
 
 !! Instruction 모델로 드디어 개발곰의 이름을 받았다!
+
 ![data/DevBear/png/llama3-instruction-devbear0001.png](data/DevBear/png/llama3-instruction-devbear0001.png)
 
 
 
 
-## Study
+
 
 #### Settings 
 C:\Users\litl\AppData\Local\Programs\Python\Python312\python.exe -m venv venv312`
