@@ -142,6 +142,16 @@ body, button, input, select, textarea {
   background-color: #fff0f5; /* 예쁜 파스텔 배경 */
 }
 
+/* 공통 유리감 변수 (선택) */
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.30);
+  --glass-bg-hover: rgba(255, 255, 255, 0.50);
+  --glass-border: 1.5px solid rgba(255, 255, 255, 0.5);
+  --glass-radius: 12px;
+  --glass-shadow: 0 4px 8px rgba(0,0,0,0.10);
+  --glass-shadow-hover: 0 6px 12px rgba(0,0,0,0.15);
+}
+
 .main-container {
   width: 100vw;
   height: 100vh;
@@ -193,4 +203,93 @@ body, button, input, select, textarea {
   background-color: rgba(255, 255, 255, 0.5);
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+
+
+/* 메인 콘텐츠 레이아웃: 왼쪽 64px, 오른쪽 가변 */
+/* .hero-row {
+  width: min(980px, 92vw);
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  column-gap: 24px;
+  align-items: center; 
+} */
+.hero-row {
+  width: min(980px, 92vw);
+  display: grid;
+  grid-template-columns: auto 1fr;  /* ← 기존 64px에서 auto로 */
+  column-gap: 24px;
+  align-items: center;
+}
+/* 소셜 전체를 감싸는 유리감 패널 */
+.social-panel {
+  background-color: var(--glass-bg);
+  border: var(--glass-border);
+  border-radius: var(--glass-radius);
+  box-shadow: var(--glass-shadow);
+  padding: 12px;             /* 내부 여백 */
+  backdrop-filter: blur(2px); /* 선택: 살짝 흐림 */
+  transition: all .25s ease-in-out;
+  display: inline-block;     /* 내용 크기만큼 */
+}
+.social-panel:hover {
+  background-color: var(--glass-bg-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--glass-shadow-hover);
+}
+
+/* 소셜 로그인 스택: 세로로 버튼들 */
+.social-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+/* 카카오 축약형 버튼 크기 고정(정사각형) */
+.social-stack .kakao-login-short {
+  width: 56px;
+  height: 56px;
+}
+
+/* 오른쪽 버튼 묶음이 너무 좁아지지 않게 */
+.button-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* 반응형: 모바일에서는 소셜이 위/가운데로 오고 가로 스택 */
+@media (max-width: 640px) {
+  .hero-row {
+    grid-template-columns: 1fr;
+    row-gap: 18px;
+  }
+  .social-panel {
+    justify-self: center; /* 가운데 정렬 */
+  }
+  .social-stack {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+
+/* 개발곰 로그인 버튼 */
+.devbear-login-button {
+font-family: 'exqt';
+font-size: 10px;
+font-weight: 500;
+border: none;
+background-color: #5fa4c4;
+color: #ece9c4;
+padding: 5px;
+border-radius: 3px;
+width: 56px;
+height: 28px;
+}
+.devbear-login-button:hover {
+  cursor:not-allowed;
 }

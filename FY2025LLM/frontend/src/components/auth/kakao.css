@@ -1,0 +1,10 @@
+/* @경로: frontend/src/components/auth/kakao.css */
+.kakao-login-short {
+  width: 183px;
+  height: 45px;
+  background: url("../../assets/images/kakao/kakao_login_medium.png")
+              no-repeat center/contain;
+  border: none;
+  display: inline-block; /* 혹시 모를 레이아웃 이슈 방지 */
+  cursor: pointer;
+}
